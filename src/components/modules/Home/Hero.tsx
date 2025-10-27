@@ -2,7 +2,6 @@
 
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
-import { useId } from "react";
 import { LocationEditIcon, Search, Type } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../../ui/dropdown-menu";
 import { Button } from "../../ui/button";
@@ -18,7 +17,7 @@ const slides = [
 const Hero = () => {
 
   return (
-    <div className="h-screen w-full relative">
+    <div className="h-screen w-full relative ">
       <Carousel
         autoPlay={true}
         infiniteLoop
@@ -43,18 +42,18 @@ const Hero = () => {
       <div className="absolute inset-0 bg-black opacity-65 ">
       </div>
       <div className="absolute inset-0 flex justify-center items-center">
-        <div className="w-2/3">
-          <h2 className="text-6xl font-semibold text-white bg-transparent">Millions of experiences. One simple search.</h2>
+        <div className="md:w-2/3 text-center md:text-left">
+          <h2 className="md:text-6xl text-3xl font-semibold text-white bg-transparent">Millions of experiences. One simple search.</h2>
           <p className="text-white mt-5">Find what makes you happy anytime, anywhere</p>
 
-          <div className="bg-white h-24 p-5 rounded-full flex justify-between mt-10">
+          <div className="bg-white md:h-24 md:space-y-0 space-y-3 p-5 md:rounded-full rounded-2xl md:mx-0 mx-5 md:flex justify-between mt-10">
             <div className="flex gap-5 items-center">
               <LocationEditIcon />
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <div>
-                    <h3 className="font-semibold">Where To?</h3>
-                    <p className="text-lg text-muted-foreground">Search a place or Activity Destinatio</p>
+                    <h3 className="font-semibold text-left">Where To?</h3>
+                    <p className="md:text-lg text-muted-foreground">Search a place or Activity Destinatio</p>
                   </div>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
@@ -67,13 +66,13 @@ const Hero = () => {
 
             </div>
             <Separator orientation="vertical" className="h-16 " />
-            <div className="flex gap-5 items-center">
+            <div className="flex gap-5 items-center ">
               <Type />
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <div>
-                    <h3 className="font-semibold">What Type?</h3>
-                    <p className="text-lg text-muted-foreground">Select a tour type</p>
+                    <h3 className="font-semibold text-left">What Type?</h3>
+                    <p className="md:text-lg text-muted-foreground">Select a tour type</p>
                   </div>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
@@ -85,7 +84,8 @@ const Hero = () => {
               </DropdownMenu>
 
             </div>
-            <Button className="rounded-full w-12 h-12" size="icon-lg"><Search /></Button>
+            <Button className="rounded-full md:w-12 md:h-12 w-0 h-0 " size="icon-lg"><Search /></Button>
+            <Button className="w-full md:hidden">Search <Search /></Button>
           </div>
         </div>
       </div>
