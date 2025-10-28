@@ -15,7 +15,7 @@ const CategoryCard = ({ category }: { category: ITourType }) => {
                     className="object-cover rounded-t-lg"
                     priority
                 />
-                <div className="group-hover:absolute group-hover:transition duration-500 ease-in-out  inset-0 bg-black opacity-55"></div>
+                <div className="group-hover:absolute rounded-t-lg group-hover:transition duration-500 ease-in-out  inset-0 bg-black opacity-55"></div>
                 <div className="absolute inset-0 flex justify-center items-center">
                     <Button
                         size="icon"

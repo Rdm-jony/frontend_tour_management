@@ -11,15 +11,15 @@ const DivisionCard = ({ division }: { division: IDivision }) => {
     return (
         <Card className="p-0">
             <CardContent className="group p-0">
-                <div className="relative overflow-hidden h-80 w-full">
+                <div className="relative overflow-hidden rounded-t-lg h-80 w-full">
                     <Image
                         src={division.thumbnail ?? imagePlaceHolder}
                         alt={division.name || "Division image"}
                         fill
-                        className="object-cover relative rounded-t-lg group-hover:scale-120 transition duration-500 ease-in-out"
+                        className="object-cover   group-hover:scale-120 transition duration-500 ease-in-out"
                         priority
                     />
-                    <div className="group-hover:absolute group-hover:translate-y-0 translate-y-full inset-0 bg-black opacity-60 transition-transform duration-500 ease-in-out">
+                    <div className="group-hover:absolute  group-hover:translate-y-0 translate-y-full inset-0 bg-black opacity-60 transition-transform duration-500 ease-in-out">
                     </div>
                     <div className="group-hover:absolute p-5 text-justify transition-transform duration-500 ease-in-out">
                         <p className="text-secondary">{division.description}</p>
