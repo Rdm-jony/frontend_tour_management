@@ -30,7 +30,7 @@ const TourCard = ({ tour }: { tour: ITour }) => {
             </div>
             <div className="w-2/3 flex p-5 justify-between">
                 <div className="w-2/3 space-y-2.5">
-                    <h3 className="capitalize font-semibold text-xl hover:text-primary cursor-pointer">{tour.title}</h3>
+                    <h3 className="capitalize font-semibold text-xl "> <span className="hover:text-primary  cursor-pointer">{tour.title}</span></h3>
                     <p className="flex items-center gap-2 text-sm text-muted-foreground"><LocationEdit className="text-green-600" size={15} />{tour.location ?? "not provide"}, {tour.division.name}</p>
                     <p className="flex gap-2">
                         <span className="flex items-center">
@@ -42,7 +42,7 @@ const TourCard = ({ tour }: { tour: ITour }) => {
                         </span>
                         <span className="text-sm">1 reviews</span>
                     </p>
-                    <p className="flex"><span className="text-green-600"><Dot /></span> <p className="line-clamp-2 text-ellipsis leading-7">{tour.description}</p></p>
+                    <p className="flex"><span className="text-green-600"><Dot /></span> <span className="line-clamp-2 text-ellipsis leading-7">{tour.description}</span></p>
                 </div>
                 <div className="border-r"></div>
 
