@@ -9,16 +9,15 @@ export interface ITour {
     images?: string[];
     location?: string;
     costForm?: number;
-    startDate?: Date;
-    endDate?: Date;
     included?: string[];
     excluded?: string[];
     amenities?: string[];
-    tourPlan?: string[];
     maxGuest?: number;
     minAge?: number;
     videoUrl?: string;
     deletedImages?: string[];
     division: IDivision;
+    lat?:number;
+    lng?:number;
     tourType: ITourType
 }

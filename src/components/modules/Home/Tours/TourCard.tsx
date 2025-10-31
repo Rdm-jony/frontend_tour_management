@@ -5,8 +5,9 @@ import imagePlaceHolder from "@/assets/image-gallery.png"
 import { CameraIcon, CircleUser, Dot, LocationEdit, Map, Star, StarIcon, VideoIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import ImageGallery from "./ImageGallery";
-import VideoGallery from "./VideoGallery";
+import ImageGallery from "../../../shared/ImageGallery";
+import VideoGallery from "../../../shared/VideoGallery";
+import Link from "next/link";
 
 const TourCard = ({ tour }: { tour: ITour }) => {
     const [openGallery, setOpenGallery] = useState(false)
@@ -49,7 +50,7 @@ const TourCard = ({ tour }: { tour: ITour }) => {
                 <div className="px-5 space-y-5">
                     <div className="flex justify-center text-green-600 items-center gap-1 border p-2 border-green-600 rounded-lg"><CircleUser size={20} /> {tour.maxGuest || 0}</div>
                     <p className="font-bold text-lg">{tour.costForm || '00'} BDT</p>
-                    <Button>Explore</Button>
+                    <Link href={`/tour/${tour._id}`}><Button className="cursor-pointer">Explore</Button></Link>
                 </div>
 
             </div>
