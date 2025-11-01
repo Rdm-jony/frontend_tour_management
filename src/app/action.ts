@@ -4,5 +4,8 @@
 import { revalidateTag } from "next/cache";
 
 export async function revalidateDivisions() {
-  revalidateTag("divisions","");
+    revalidateTag("divisions", "");
+}
+export async function revalidateTourTypes() {
+    revalidateTag("tourTypes", "");
 }

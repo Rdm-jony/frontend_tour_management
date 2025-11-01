@@ -68,6 +68,13 @@ const data = {
       isActive: true,
 
     },
+    {
+      title: "All Tour Type",
+      url: "/dashboard/allTourType",
+      icon: SquareTerminal,
+      isActive: true,
+
+    },
 
   ],
 
