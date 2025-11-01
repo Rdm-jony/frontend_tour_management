@@ -1,8 +1,7 @@
-import DivisionRow from "@/components/modules/dashboard/DivisionRow";
+import AddTourType from "@/components/modules/dashboard/AddTourType";
 import TourTypeRow from "@/components/modules/dashboard/TourTypeRow";
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { ITourType } from "@/types/category.type";
-import { IDivision } from "@/types/division.type";
 
 const AllTourType = async () => {
     const res = await fetch('http://localhost:5000/api/v1/tour/tour-types', { cache: "no-store", next: { tags: ["tourTypes"] } });
@@ -11,6 +10,9 @@ const AllTourType = async () => {
 
     return (
         <div className="p-4">
+            <div className="flex justify-end my-5">
+                <AddTourType />
+            </div>
             <Table>
                 <TableCaption>A list of all divisions.</TableCaption>
                 <TableHeader>

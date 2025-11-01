@@ -14,7 +14,28 @@ export async function updateTourType(values: FormData, id: string) {
 
         if (!res.ok) {
             const errorData = await res.json();
-            throw new Error(errorData.message || "Login failed");
+            throw new Error(errorData.message || "edit tour type failed");
+        }
+        await revalidateTourTypes()
+
+        const data: IResponse<ITourType> = await res.json();
+        return data;
+    } catch (error) {
+        console.error("Login error:", error);
+        throw error;
+    }
+}
+export async function addTourType(values: FormData) {
+    try {
+        const res = await fetch(`http://localhost:5000/api/v1/tour/create-tour-type`, {
+            method: "POST",
+            credentials: "include",
+            body: values,
+        });
+
+        if (!res.ok) {
+            const errorData = await res.json();
+            throw new Error(errorData.message || "add tour type failed");
         }
         await revalidateTourTypes()
 
