@@ -1,9 +1,7 @@
+import AddDivision from "@/components/modules/dashboard/AddDivision";
 import DivisionRow from "@/components/modules/dashboard/DivisionRow";
-import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { IDivision } from "@/types/division.type";
-import { Edit } from "lucide-react";
-import Image from "next/image";
 
 const AllDivision = async () => {
     const res = await fetch('http://localhost:5000/api/v1/division', { cache: "no-store", next: { tags: ["divisions"] } });
@@ -12,6 +10,9 @@ const AllDivision = async () => {
 
     return (
         <div className="p-4">
+            <div className="flex justify-end my-5">
+                <AddDivision />
+            </div>
             <Table>
                 <TableCaption>A list of all divisions.</TableCaption>
                 <TableHeader>
