@@ -1,4 +1,4 @@
-import TourListSidebar from "@/components/modules/Home/Tours/TourListSidebar";
+import TourListSidebar from "@/components/modules/Tours/TourListSidebar";
 import React from "react";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {

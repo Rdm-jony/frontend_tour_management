@@ -5,8 +5,8 @@ import imagePlaceHolder from "@/assets/image-gallery.png"
 import { CameraIcon, CircleUser, Dot, LocationEdit, Map, Star, StarIcon, VideoIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import ImageGallery from "../../../shared/ImageGallery";
-import VideoGallery from "../../../shared/VideoGallery";
+import ImageGallery from "../../shared/ImageGallery";
+import VideoGallery from "../../shared/VideoGallery";
 import Link from "next/link";
 
 const TourCard = ({ tour }: { tour: ITour }) => {

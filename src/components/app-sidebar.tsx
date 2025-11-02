@@ -55,8 +55,8 @@ const data = {
 
     },
     {
-      title: "Add Tour",
-      url: "/dashboard/addTour",
+      title: "All Tour",
+      url: "/dashboard/allTour",
       icon: SquareTerminal,
       isActive: true,
 

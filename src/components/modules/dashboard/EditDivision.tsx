@@ -23,7 +23,6 @@ import SingleFileUploader from "@/components/singleFileUploader"
 import { updateDivision } from "@/utils/division"
 import ButtonLoader from "@/components/shared/ButtonLoader"
 
-// ✅ 1. Validation Schema
 const formSchema = z.object({
     name: z.string().min(2, "Name is required"),
     description: z.string().optional(),

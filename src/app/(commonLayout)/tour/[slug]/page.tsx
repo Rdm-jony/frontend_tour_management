@@ -5,11 +5,8 @@ import { CameraIcon, LocationEdit, MapPin, Share2, StarIcon, User2, Users, Video
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import useSWR from "swr";
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay } from "swiper/modules"; // ✅ import module
 
 import 'swiper/css';
-import Image from "next/image";
 import DetailImageSwiper from "@/components/modules/TourDetails/DetailImageSwiper";
 import VideoGallery from "@/components/shared/VideoGallery";
 import ImageGallery from "@/components/shared/ImageGallery";

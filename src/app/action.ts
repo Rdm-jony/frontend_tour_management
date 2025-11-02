@@ -9,3 +9,6 @@ export async function revalidateDivisions() {
 export async function revalidateTourTypes() {
     revalidateTag("tourTypes", "");
 }
+export async function revalidateTour() {
+    revalidateTag("tour", "");
+}

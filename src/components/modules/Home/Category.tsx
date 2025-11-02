@@ -7,7 +7,6 @@ import SwiperCategory from "./SwiperCategory";
 const Categoty = async () => {
     const data = await fetch('http://localhost:5000/api/v1/tour/tour-types')
     const categories = await data.json()
-    console.log(categories.data);
     return (
         <div className="my-20">
             <SectionTitle

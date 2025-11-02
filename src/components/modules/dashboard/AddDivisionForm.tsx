@@ -15,15 +15,12 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { IDivision } from "@/types/division.type"
 import { useState } from "react"
 import { showToast } from "nextjs-toast-notify"
-import { FileMetadata } from "@/hooks/use-file-upload"
 import SingleFileUploader from "@/components/singleFileUploader"
-import { addDivision, updateDivision } from "@/utils/division"
+import { addDivision } from "@/utils/division"
 import ButtonLoader from "@/components/shared/ButtonLoader"
 
-// ✅ 1. Validation Schema
 const formSchema = z.object({
     name: z
         .string()
@@ -73,7 +70,6 @@ const AddDivisionForm = ({ setOpen }: { setOpen: (bool: boolean) => void }) => {
         }
     }
 
-    // ✅ 4. UI Form
     return (
         <div className="max-w-md mx-auto bg-white p-6 rounded-xl shadow-sm">
             <h2 className="text-2xl font-semibold mb-6 text-center">Add New Division</h2>

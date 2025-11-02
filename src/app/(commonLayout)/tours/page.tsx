@@ -1,7 +1,7 @@
 "use client"
 import useSWR from "swr";
 
-import TourCard from "@/components/modules/Home/Tours/TourCard";
+import TourCard from "@/components/modules/Tours/TourCard";
 import { ITour } from "@/types/tour.type";
 import { useSearchParams } from "next/navigation";
 import TourCardSkeleton from "@/components/skeleton/TourCardSkeleton";
