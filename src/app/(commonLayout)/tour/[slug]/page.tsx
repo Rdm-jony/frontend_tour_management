@@ -89,7 +89,7 @@ const TourDetails = () => {
                     </div>
                     <div className="my-5">
                         {
-                            tour?.lat && tour?.lng && <Map lat={tour?.lat} lng={tour?.lng} />
+                            tour?.lat && tour?.lng && <Map lat={Number(tour?.lat)} lng={Number(tour?.lng)} />
                         }
 
                     </div>

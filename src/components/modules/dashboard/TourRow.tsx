@@ -46,15 +46,7 @@ const TourRow = ({ tour }: TourRowProps) => {
                 <TableCell>{tour.tourType?.name}</TableCell>
                 <TableCell>{tour.location}, {tour.division?.name}</TableCell>
                 <TableCell className="flex gap-2 justify-end">
-                    <Button className="cursor-pointer" size="sm" variant="secondary" onClick={handleNavigate} >
-                        <Info className="w-4 h-4" />
-                    </Button>
-                    <Button onClick={() => setOpenDrawer(true)} className="cursor-pointer" size="sm" variant="outline">
-                        <Edit className="w-4 h-4" />
-                    </Button>
-                    <Button className="cursor-pointer" size="sm" variant="destructive" >
-                        <Trash2 className="w-4 h-4" />
-                    </Button>
+                  
 
                 </TableCell>
 

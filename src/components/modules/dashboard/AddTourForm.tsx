@@ -16,17 +16,15 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form";
-import { showToast } from "nextjs-toast-notify";
 import ButtonLoader from "@/components/shared/ButtonLoader";
-import Image from "next/image";
-import { CircleX } from "lucide-react";
 import MaultiFileUploader from "@/components/MultiFileUploader";
-import { ITour } from "@/types/tour.type";
 import { IDivision } from "@/types/division.type";
 import { ITourType } from "@/types/category.type";
 import { FileMetadata } from "@/hooks/use-file-upload";
 import useSWR from "swr";
-import { updateTour } from "@/utils/tour";
+import { ITour } from "@/types/tour.type";
+import { addTour } from "@/utils/tour";
+import { showToast } from "nextjs-toast-notify";
 
 const formSchema = z.object({
     title: z.string().min(3, "Title is required"),
@@ -49,43 +47,38 @@ const formSchema = z.object({
         .number({ message: "Max guest must be a number" })
         .int()
         .positive(),
-
+    images: z
+        .array(z.any())
+        .min(4, "You must upload at least 4 images"),
 });
+
 
 type FormValues = z.infer<typeof formSchema>;
 
 const fetcher = (url: string) => fetch(url).then((r) => r.json());
 
-const EditTour = ({ tour, setOpen }: { tour: ITour, setOpen: (bool: boolean) => void }) => {
+const AddTourForm = ({ setOpen }: { setOpen: (bool: boolean) => void }) => {
     const [uploadImages, setUploadImages] = useState<(File | FileMetadata)[]>([]);
     const [loading, setLoading] = useState(false);
-    const [deletedImages, setDeletedImages] = useState<string[]>([]);
-    const [tourImages, setTourImages] = useState<string[]>(tour?.images || []);
 
     const form = useForm<FormValues>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            title: tour?.title || "",
-            description: tour?.description || "",
-            location: tour?.location || "",
-            division: tour?.division?._id || "",
-            tourType: tour?.tourType?._id || "",
-            included:
-                tour?.included?.length
-                    ? tour.included.map((item) => ({ value: item }))
-                    : [{ value: "" }],
+            title: "",
+            description: "",
+            location: "",
+            division: "",
+            tourType: "",
+            included: [{ value: "" }],
 
-            excluded:
-                tour?.excluded?.length
-                    ? tour.excluded.map((item) => ({ value: item }))
-                    : [{ value: "" }],
+            excluded: [{ value: "" }],
 
-            videoUrl: tour?.videoUrl || "",
-            lat: tour?.lat || "",
-            lng: tour?.lng || "",
-            costForm: tour?.costForm || 0,
-            minAge: tour?.minAge || 0,
-            maxGuest: tour?.maxGuest || 0,
+            videoUrl: "",
+            lat: "",
+            lng: "",
+            costForm: 0,
+            minAge: 0,
+            maxGuest: 0,
         },
     });
 
@@ -93,10 +86,7 @@ const EditTour = ({ tour, setOpen }: { tour: ITour, setOpen: (bool: boolean) => 
     const { fields: includeFields, append: includeAppend, remove: includeRemove } = useFieldArray({ control: form.control, name: "included" });
     const { fields: excludeFields, append: excludeAppend, remove: excludeRemove } = useFieldArray({ control: form.control, name: "excluded" });
 
-    const handleDeletedImage = (image: string) => {
-        setDeletedImages((prev) => [...prev, image]);
-        setTourImages((prev) => prev.filter((i) => i !== image));
-    };
+
 
     const urlDivision = `http://localhost:5000/api/v1/division`;
     const urlTourType = `http://localhost:5000/api/v1/tour/tour-types`;
@@ -108,19 +98,18 @@ const EditTour = ({ tour, setOpen }: { tour: ITour, setOpen: (bool: boolean) => 
     const tourTypes = tourTypeResponse?.data as ITourType[];
 
     const onSubmit = async (values: FormValues) => {
-        if (!tour._id) {
-            return showToast.error("tour id not found")
-        }
-        const formattedData = {
-            ...values,
-            deletedImages: deletedImages,
+        console.log(values);
+
+        const {images,...tourInfo} = values
+         const formattedData = {
+            ...tourInfo,
             included: values.included.map((item) => item.value),
             excluded: values.excluded.map((item) => item.value),
         };
         const formData = new FormData()
         formData.append("data", JSON.stringify(formattedData))
-        if (uploadImages.length > 0) {
-            uploadImages.forEach((file) => {
+        if (images.length > 0) {
+            images.forEach((file) => {
                 if (file instanceof File) {
                     formData.append("files", file);
                 }
@@ -128,13 +117,13 @@ const EditTour = ({ tour, setOpen }: { tour: ITour, setOpen: (bool: boolean) => 
         }
         try {
             setLoading(true)
-            const data = await updateTour(formData, tour._id as string)
+            const data = await addTour(formData)
             if (data.success) {
                 showToast.success(data.message)
                 setOpen(false)
             }
         } catch (error: any) {
-            showToast.error(error.message || "Error updating tour")
+            showToast.error(error.message || "Error add tour")
             console.error(error)
         } finally {
             setLoading(false)
@@ -150,31 +139,17 @@ const EditTour = ({ tour, setOpen }: { tour: ITour, setOpen: (bool: boolean) => 
                 <div>
                     <FormLabel>Upload New Images</FormLabel>
                     <div className="mt-2">
-                        <MaultiFileUploader onChange={setUploadImages} />
-                    </div>
+                        <MaultiFileUploader
+                            onChange={(files) => {
+                                setUploadImages(files);
+                                form.setValue("images", files);
+                            }}
+                        />
+                        <FormMessage>{form.formState.errors.images?.message}</FormMessage>                    </div>
                 </div>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                     {/* Upload New Images */}
 
-
-                    {/* Existing Images */}
-                    <div>
-                        <FormLabel>Uploaded Images</FormLabel>
-                        <div className="flex gap-2 mt-2 flex-wrap">
-                            {tourImages?.map((t) => (
-                                <div className="relative w-16 h-16" key={t}>
-                                    <Image alt="tour" src={t} fill className="rounded-md object-cover" />
-                                    <CircleX
-                                        onClick={() => handleDeletedImage(t)}
-                                        size={20}
-                                        className="absolute top-0 right-0 text-red-600 bg-white rounded-full cursor-pointer"
-                                    />
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-
-                    {/* Text Fields */}
                     <FormField
                         control={form.control}
                         name="title"
@@ -282,19 +257,7 @@ const EditTour = ({ tour, setOpen }: { tour: ITour, setOpen: (bool: boolean) => 
                         />
                     </div>
 
-                    <FormField
-                        control={form.control}
-                        name="videoUrl"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Video URL</FormLabel>
-                                <FormControl>
-                                    <Input placeholder="Enter YouTube video link" {...field} />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
+
 
                     <div className="flex gap-5">
                         <FormField
@@ -438,10 +401,10 @@ const EditTour = ({ tour, setOpen }: { tour: ITour, setOpen: (bool: boolean) => 
                                     <FormLabel>Latitude</FormLabel>
                                     <FormControl>
                                         <Input
+                                            type="text"
                                             step="any"
                                             placeholder="Enter latitude"
                                             {...field}
-                                            onChange={(e) => field.onChange(parseFloat(e.target.value) || 0)}
                                         />
                                     </FormControl>
                                     <FormMessage />
@@ -457,10 +420,10 @@ const EditTour = ({ tour, setOpen }: { tour: ITour, setOpen: (bool: boolean) => 
                                     <FormLabel>Longitude</FormLabel>
                                     <FormControl>
                                         <Input
+                                            type="text"
                                             step="any"
                                             placeholder="Enter longitude"
                                             {...field}
-                                            onChange={(e) => field.onChange(parseFloat(e.target.value) || 0)}
                                         />
                                     </FormControl>
                                     <FormMessage />
@@ -477,4 +440,4 @@ const EditTour = ({ tour, setOpen }: { tour: ITour, setOpen: (bool: boolean) => 
     );
 };
 
-export default EditTour;
+export default AddTourForm;

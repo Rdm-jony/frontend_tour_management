@@ -29,6 +29,7 @@ const DivisionRow = ({ division }: { division: IDivision }) => {
             >
                 {division.description}
             </TableCell>
+            <TableCell className="text-center font-semibold">{division.totalTours}</TableCell>
 
             <TableCell className="text-right">
                 <Button onClick={() => setOpenDrawer(true)} size="icon" variant="outline">

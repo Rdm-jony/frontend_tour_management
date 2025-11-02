@@ -20,6 +20,7 @@ const AllDivision = async () => {
                         <TableHead className="w-[80px]">Image</TableHead>
                         <TableHead className="w-[150px]">Name</TableHead>
                         <TableHead>Description</TableHead>
+                        <TableHead>Total Tour</TableHead>
                         <TableHead className="text-right w-[100px]">Action</TableHead>
                     </TableRow>
                 </TableHeader>
