@@ -44,3 +44,42 @@ export async function addTour(values: FormData) {
         throw error;
     }
 }
+export async function getAllTour() {
+    try {
+        const res = await fetch(`http://localhost:5000/api/v1/tour`, {
+            method: "GET",
+            credentials: "include",
+        });
+
+        if (!res.ok) {
+            const errorData = await res.json();
+            throw new Error(errorData.message || "failed");
+        }
+
+        const data: IResponse<ITour[]> = await res.json();
+        return data;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
+
+export async function getTour(id: string) {
+    try {
+        const res = await fetch(`http://localhost:5000/api/v1/tour/${id}`, {
+            method: "GET",
+            credentials: "include",
+        });
+
+        if (!res.ok) {
+            const errorData = await res.json();
+            throw new Error(errorData.message || "failed");
+        }
+
+        const data: IResponse<ITour[]> = await res.json();
+        return data;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}

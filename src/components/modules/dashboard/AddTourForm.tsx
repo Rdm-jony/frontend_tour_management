@@ -58,7 +58,6 @@ type FormValues = z.infer<typeof formSchema>;
 const fetcher = (url: string) => fetch(url).then((r) => r.json());
 
 const AddTourForm = ({ setOpen }: { setOpen: (bool: boolean) => void }) => {
-    const [uploadImages, setUploadImages] = useState<(File | FileMetadata)[]>([]);
     const [loading, setLoading] = useState(false);
 
     const form = useForm<FormValues>({
@@ -141,7 +140,6 @@ const AddTourForm = ({ setOpen }: { setOpen: (bool: boolean) => void }) => {
                     <div className="mt-2">
                         <MaultiFileUploader
                             onChange={(files) => {
-                                setUploadImages(files);
                                 form.setValue("images", files);
                             }}
                         />

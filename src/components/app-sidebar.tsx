@@ -75,6 +75,13 @@ const data = {
       isActive: true,
 
     },
+    {
+      title: "All User",
+      url: "/dashboard/allUser",
+      icon: SquareTerminal,
+      isActive: true,
+
+    },
 
   ],
 
