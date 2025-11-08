@@ -1,3 +1,7 @@
+import { IPayment } from "./payment.type";
+import { ITour } from "./tour.type";
+import { IUser } from "./user.type";
+
 export enum BOOKING_STATUS {
     PENDING = "PENDING",
     CANCEL = "CANCEL",
@@ -5,9 +9,10 @@ export enum BOOKING_STATUS {
     FAILED = "FAILED"
 }
 export interface IBooking {
-    tour: string,
-    user: string,
-    payment?: string,
+    _id?: string,
+    tour: ITour | string,
+    user: IUser | string,
+    payment: IPayment,
     guestCount: number,
     status: BOOKING_STATUS,
     createdAt?: Date

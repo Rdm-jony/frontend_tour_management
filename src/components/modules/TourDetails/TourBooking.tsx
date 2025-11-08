@@ -18,7 +18,6 @@ const TourBooking = ({ tour }: { tour: ITour }) => {
     const [user, setUser] = useState<{ isAuthenticated: boolean; user: IUser } | null>(null);
     const router = useRouter();
 
-    // ✅ Fetch authentication status once component mounts
     useEffect(() => {
         const fetchAuth = async () => {
             const data = await checkAuthStatus();
@@ -27,7 +26,6 @@ const TourBooking = ({ tour }: { tour: ITour }) => {
         fetchAuth();
     }, []);
 
-    // ✅ Handle tour booking
     const handleBooking = async () => {
         try {
             if (!tour._id) {
@@ -59,7 +57,6 @@ const TourBooking = ({ tour }: { tour: ITour }) => {
 
     return (
         <div className="border p-10 space-y-4 rounded-lg shadow-lg sticky top-1/2 bg-white">
-            {/* Guest Counter */}
             <div className="flex">
                 <Button
                     variant="outline"
@@ -84,7 +81,6 @@ const TourBooking = ({ tour }: { tour: ITour }) => {
 
             <p className="font-semibold text-muted-foreground text-sm">Max Guest: 5</p>
 
-            {/* Dynamic Total Price */}
             <p className="font-semibold text-xl">
                 Total: {tour.costForm as number * count} BDT
             </p>
