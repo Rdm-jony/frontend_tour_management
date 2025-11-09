@@ -14,6 +14,7 @@ import ImageGallery from "@/components/shared/ImageGallery";
 import IncludeExclude from "@/components/modules/TourDetails/IncludeExclude";
 import Map from "@/components/modules/TourDetails/Map";
 import TourBooking from "@/components/modules/TourDetails/TourBooking";
+import TourReviews from "../review/TourReviews";
 
 const fetcher = (url: string) => fetch(url).then(r => r.json());
 
@@ -95,9 +96,11 @@ const TourDetailsClient = ({ initialData, slug }: { initialData: any, slug: stri
                         }
 
                     </div>
+                    <TourReviews tourId={tour._id} />
+
                 </div>
                 <div >
-                    <TourBooking tour={tour}/>
+                    <TourBooking tour={tour} />
                 </div>
             </div>
             {
