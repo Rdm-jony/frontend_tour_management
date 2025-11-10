@@ -13,6 +13,7 @@ import { showToast } from "nextjs-toast-notify";
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import ButtonLoader from '@/components/shared/ButtonLoader';
+import Link from 'next/link';
 
 const logninFormSchema = z.object({
     email: z.email({
@@ -107,9 +108,9 @@ const LoginForm = ({ redirect }: { redirect: string }) => {
                                 </label>
                             </div>
                             <div>
-                                <a href="jajvascript:void(0);" className="text-blue-600 font-medium text-sm hover:underline">
+                                <Link href="/forget-password" className="text-blue-600 font-medium text-sm hover:underline">
                                     Forgot Password?
-                                </a>
+                                </Link>
                             </div>
                         </div>
                     </div>

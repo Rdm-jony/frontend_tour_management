@@ -28,7 +28,6 @@ export default function Navbar() {
         <div className="flex items-center gap-2">
           {/* Mobile menu trigger */}
           <Popover>
-
             <PopoverTrigger asChild>
               <Button
                 className="group size-8 md:hidden"
