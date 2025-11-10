@@ -25,28 +25,31 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { useUser } from "@/hooks/useUser"
+import Link from "next/link"
 
 export default function Profile() {
   const { user } = useUser()
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        {
-          user && user.email ? <Button variant="ghost" className="h-auto p-0 hover:bg-transparent">
-            <Avatar>
-              <AvatarImage src={user.picture} alt="Profile image" />
-              <AvatarFallback className="capitalize">{user.email[0]}</AvatarFallback>
-            </Avatar>
-            <ChevronDownIcon
-              size={16}
-              className="opacity-60"
-              aria-hidden="true"
-            />
-          </Button> : <Button>Sign In</Button>
-        }
 
-      </DropdownMenuTrigger>
+      {
+        user && user.email ? <DropdownMenuTrigger asChild> <Button variant="ghost" className="h-auto p-0 hover:bg-transparent">
+          <Avatar>
+            <AvatarImage src={user.picture} alt="Profile image" />
+            <AvatarFallback className="capitalize">{user.email[0]}</AvatarFallback>
+          </Avatar>
+          <ChevronDownIcon
+            size={16}
+            className="opacity-60"
+            aria-hidden="true"
+          />
+        </Button> </DropdownMenuTrigger> : <Link href="signIn" >
+          <Button className="cursor-pointer">Sign In</Button>
+        </Link>
+      }
+
+
       <DropdownMenuContent className="max-w-64">
         <DropdownMenuLabel className="flex min-w-0 flex-col">
           <span className="truncate text-sm font-medium text-foreground">
@@ -62,11 +65,11 @@ export default function Profile() {
             <BoltIcon size={16} className="opacity-60" aria-hidden="true" />
             <span>Profile</span>
           </DropdownMenuItem>
- 
-   
+
+
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-      
+
         <DropdownMenuSeparator />
         <DropdownMenuItem>
           <LogOutIcon size={16} className="opacity-60" aria-hidden="true" />

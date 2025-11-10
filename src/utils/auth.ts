@@ -83,6 +83,57 @@ export async function resetPassword({ newPassword, id, token }: { newPassword: s
     }
 }
 
+export async function sendOtp({ email }: { email: string }) {
+    try {
+        const res = await fetch(`http://localhost:5000/api/v1/otp/send`, {
+            method: "POST",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email }),
+        });
+
+        if (!res.ok) {
+            const errorData = await res.json();
+            throw new Error(errorData.message || "failed");
+        }
+
+
+        const data: IResponse<null> = await res.json();
+
+        return data;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
+export async function verifyOtp({ email, otp }: { email: string, otp: string }) {
+    try {
+        const res = await fetch(`http://localhost:5000/api/v1/otp/verify`, {
+            method: "POST",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email, otp }),
+        });
+
+        if (!res.ok) {
+            const errorData = await res.json();
+            throw new Error(errorData.message || "failed");
+        }
+
+
+        const data: IResponse<null> = await res.json();
+
+        return data;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
+
 
 
 export default checkAuthStatus;

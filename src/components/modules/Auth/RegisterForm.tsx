@@ -15,6 +15,8 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import ButtonLoader from '@/components/shared/ButtonLoader';
 import { userRegister } from '@/utils/register';
+import { object } from 'zod/v3';
+import { IUser } from '@/types/user.type';
 
 const logninFormSchema = z.object({
     name: z.string().min(1, "name is required"),
@@ -57,9 +59,14 @@ const RegisterForm = () => {
         try {
             setLoading(true)
             const data = await userRegister(values)
+            console.log(data);
             if (data.success) {
                 showToast.success(data.message)
-                router.push("/")
+                if (!(data.data as IUser).isVerified) {
+                    router.push(`/verify?email=${(data.data as IUser).email}`)
+                } else {
+                    router.push("/")
+                }
             }
         } catch (error: any) {
             showToast.error(error.message)
