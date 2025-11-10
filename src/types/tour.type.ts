@@ -19,5 +19,6 @@ export interface ITour {
     division: IDivision;
     lat?:string;
     lng?:string;
-    tourType: ITourType
+    tourType: ITourType,
+    totalReviews?:number
 }

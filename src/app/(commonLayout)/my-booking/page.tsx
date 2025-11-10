@@ -9,7 +9,7 @@ import Image from "next/image";
 const fetcher = (url: string) =>
   fetch(url, { credentials: "include" }).then((res) => res.json());
 
-const MyBooking = () => {
+const MyBookingPage = () => {
   const url = `http://localhost:5000/api/v1/booking/myBooking`;
   const { data, error, isLoading } = useSWR(url, fetcher);
   const bookings = data?.data as IBooking[];
@@ -101,4 +101,4 @@ const MyBooking = () => {
   );
 };
 
-export default MyBooking;
+export default MyBookingPage;

@@ -3,7 +3,7 @@ import TourTypeRow from "@/components/modules/dashboard/TourTypeRow";
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { ITourType } from "@/types/category.type";
 
-const AllTourType = async () => {
+const AllTourTypePage = async () => {
     const res = await fetch('http://localhost:5000/api/v1/tour/tour-types', { cache: "no-store", next: { tags: ["tourTypes"] } });
     const data = await res.json();
     const tourTypes: ITourType[] = data?.data || [];
@@ -32,4 +32,4 @@ const AllTourType = async () => {
     );
 };
 
-export default AllTourType;
+export default AllTourTypePage;

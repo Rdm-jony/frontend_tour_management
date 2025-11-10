@@ -4,7 +4,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-const PaymentSuccess = () => {
+const PaymentSuccessPage = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -52,4 +52,4 @@ const PaymentSuccess = () => {
   );
 };
 
-export default PaymentSuccess;
+export default PaymentSuccessPage;

@@ -3,7 +3,7 @@ import DivisionRow from "@/components/modules/dashboard/DivisionRow";
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { IDivision } from "@/types/division.type";
 
-const AllDivision = async () => {
+const AllDivisionPage = async () => {
     const res = await fetch('http://localhost:5000/api/v1/division', { cache: "no-store", next: { tags: ["divisions"] } });
     const data = await res.json();
     const divisions: IDivision[] = data?.data || [];
@@ -34,4 +34,4 @@ const AllDivision = async () => {
     );
 };
 
-export default AllDivision;
+export default AllDivisionPage;

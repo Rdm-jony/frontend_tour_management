@@ -4,7 +4,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { XCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-const PaymentCancel = () => {
+const PaymentCancelPage = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -64,4 +64,4 @@ const PaymentCancel = () => {
   );
 };
 
-export default PaymentCancel;
+export default PaymentCancelPage;

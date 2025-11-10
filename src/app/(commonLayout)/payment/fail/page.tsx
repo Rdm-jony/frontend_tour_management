@@ -4,7 +4,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-const PaymentFail = () => {
+const PaymentFailPage = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -64,4 +64,4 @@ const PaymentFail = () => {
   );
 };
 
-export default PaymentFail;
+export default PaymentFailPage;

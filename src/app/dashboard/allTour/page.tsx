@@ -7,7 +7,7 @@ import useSWR from "swr";
 
 const fetcher = (url: string) => fetch(url).then(r => r.json());
 
-const AllTour = () => {
+const AllTourPage = () => {
     const url = `http://localhost:5000/api/v1/tour`;
     const { data, error, isLoading } = useSWR(url, fetcher)
     const tours = data?.data as ITour[]
@@ -36,4 +36,4 @@ const AllTour = () => {
     );
 };
 
-export default AllTour;
+export default AllTourPage;
