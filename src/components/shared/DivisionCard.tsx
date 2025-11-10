@@ -6,11 +6,21 @@ import {
 import { IDivision } from "@/types/division.type";
 import Image from "next/image";
 import imagePlaceHolder from "@/assets/image-gallery.png"
+import { useRouter, useSearchParams } from "next/navigation";
 
 const DivisionCard = ({ division }: { division: IDivision }) => {
+    const searchParams = useSearchParams();
+    const router = useRouter()
+
+    const handleNavigate = (value: string) => {
+        const params = new URLSearchParams(searchParams)
+        params.set("division", value)
+        const queryString = params.toString();
+        router.push(queryString ? `/tours?${queryString}` : "/tours");
+    }
     return (
         <Card className="p-0">
-            <CardContent className="group p-0">
+            <CardContent className="group p-0 cursor-pointer" onClick={()=>handleNavigate(division._id as string)}>
                 <div className="relative overflow-hidden rounded-t-lg h-80 w-full">
                     <Image
                         src={division.thumbnail ?? imagePlaceHolder}

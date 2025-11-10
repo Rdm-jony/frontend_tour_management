@@ -11,13 +11,13 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import Logo from "./Logo"
+import Profile from "../Profile"
 
 // Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [
   { href: "/", label: "Home", active: true },
   { href: "/tours", label: "Tours" },
-  { href: "#", label: "Pricing" },
-  { href: "#", label: "About" },
+
 ]
 
 export default function Navbar() {
@@ -105,12 +105,7 @@ export default function Navbar() {
         </div>
         {/* Right side */}
         <div className="flex items-center gap-2">
-          <Button asChild variant="ghost" size="sm" className="text-sm">
-            <a href="#">Sign In</a>
-          </Button>
-          <Button asChild size="sm" className="text-sm">
-            <a href="#">Get Started</a>
-          </Button>
+          <Profile />
         </div>
       </div>
     </header>

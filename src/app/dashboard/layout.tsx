@@ -43,7 +43,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     </div>
                 </header>
             
-                    <div className="p-10">
+                    <div className="md:p-10 p-0">
                         {children}
                     </div>
             

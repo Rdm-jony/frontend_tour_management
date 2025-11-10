@@ -16,7 +16,7 @@ const AllTourPage = () => {
             <div className="my-5 flex justify-end">
                 <AddTour />
             </div>
-            <div className="p-5">
+            <div className="md:p-5 p-0">
                 <h2 className="text-lg font-semibold mb-4">{tours?.length} Tours Found</h2>
 
                 {isLoading ? (

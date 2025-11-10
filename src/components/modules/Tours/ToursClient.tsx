@@ -6,6 +6,7 @@ import { useSearchParams } from "next/navigation";
 import TourCard from "@/components/modules/Tours/TourCard";
 import TourCardSkeleton from "@/components/skeleton/TourCardSkeleton";
 import { ITour } from "@/types/tour.type";
+import TourCardVertical from "./TourCardVertical";
 
 const fetcher = (url: string) => fetch(url).then(r => r.json());
 
@@ -15,7 +16,7 @@ export default function ToursClient({ initialData }: { initialData: any }) {
   const url = `http://localhost:5000/api/v1/tour?${queryString}`;
 
   const { data, isLoading } = useSWR(url, fetcher, {
-    fallbackData: initialData, 
+    fallbackData: initialData,
     revalidateOnFocus: false,
   });
 
@@ -32,7 +33,10 @@ export default function ToursClient({ initialData }: { initialData: any }) {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-5">
           {tours.map((tour: ITour) => (
-            <TourCard key={tour._id} tour={tour} />
+            <>
+              <TourCard  key={tour._id} tour={tour} />
+              <TourCardVertical key={tour._id} tour={tour} />
+            </>
           ))}
         </div>
       )}

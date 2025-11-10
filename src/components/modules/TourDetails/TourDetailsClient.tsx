@@ -29,15 +29,15 @@ const TourDetailsClient = ({ initialData, slug }: { initialData: any, slug: stri
     return (
         <div>
             <div className="p-10 bg-green-50">
-                <div className="flex justify-between items-center mb-5">
-                    <h2 className="text-5xl font-semibold">{tour?.title}</h2>
+                <div className="md:flex justify-between items-center mb-5">
+                    <h2 className="md:text-5xl text-3xl font-semibold mb-5 md:mb-0">{tour?.title}</h2>
                     <div className="flex gap-5 items-center">
                         <Button onClick={() => setOpenVideo(true)} className="bg-secondary text-primary hover:text-white cursor-pointer"><VideoIcon /> View Video</Button>
                         <Button onClick={() => setOpenGallery(true)} className="bg-secondary text-primary hover:text-white cursor-pointer"><CameraIcon />{tour?.images?.length} Photos</Button>
                         <Button onClick={() => setOpenGallery(true)} className="bg-secondary text-primary hover:text-white cursor-pointer"><Share2 /></Button>
                     </div>
                 </div>
-                <div className="flex gap-5 items-center">
+                <div className="md:flex gap-5 items-center">
                     <p className="flex items-center gap-2"><LocationEdit className="text-green-600" size={15} />{tour?.location ?? "not provide"}, {tour?.division?.name}</p>
                     <p className="flex gap-2 items-center">
                         <span className="flex items-center">
@@ -56,7 +56,7 @@ const TourDetailsClient = ({ initialData, slug }: { initialData: any, slug: stri
 
                     }
                 </div>
-                <div className="flex gap-20">
+                <div className="md:flex gap-20 space-y-2">
                     <div className="flex items-center gap-2">
                         <Users className="text-primary" />
                         <div>
@@ -80,8 +80,8 @@ const TourDetailsClient = ({ initialData, slug }: { initialData: any, slug: stri
                     </div>
                 </div>
             </div>
-            <div className="p-10 flex">
-                <div className="pr-10">
+            <div className="md:p-10 p-0 flex md:flex-row flex-col-reverse">
+                <div className="md:pr-10 pr-0">
                     <div>
                         <h3 className="font-semibold text-2xl">Overview</h3>
                         <p className="text-justify my-2">{tour?.description}</p>
@@ -99,7 +99,7 @@ const TourDetailsClient = ({ initialData, slug }: { initialData: any, slug: stri
                     <TourReviews tourId={tour._id} />
 
                 </div>
-                <div >
+                <div className="my-5 md:my-0">
                     <TourBooking tour={tour} />
                 </div>
             </div>

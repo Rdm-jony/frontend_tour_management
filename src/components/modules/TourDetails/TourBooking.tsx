@@ -56,7 +56,7 @@ const TourBooking = ({ tour }: { tour: ITour }) => {
     };
 
     return (
-        <div className="border p-10 space-y-4 rounded-lg shadow-lg sticky top-1/2 bg-white">
+        <div className="border p-10 space-y-4 rounded-lg shadow-lg sticky top-1/2  bg-white">
             <div className="flex">
                 <Button
                     variant="outline"
