@@ -1,5 +1,6 @@
 import { IResponse } from "@/types/successResponse.type";
 import { IUser } from "@/types/user.type";
+import { getCookie } from "./tokenHandlers";
 
 // utils/userLogin.ts
 export async function userRegister({
@@ -11,12 +12,13 @@ export async function userRegister({
     password: string;
     name: string
 }) {
+    const token = await getCookie("accessToken");
     try {
         const res = await fetch("https://beckend-tour-management.vercel.app/api/v1/user/register", {
             method: "POST",
-            credentials: "include",
             headers: {
                 "Content-Type": "application/json",
+                "authorization": `${token}`,
             },
             body: JSON.stringify({ name, email, password }),
         });

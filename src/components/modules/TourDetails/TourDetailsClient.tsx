@@ -16,9 +16,12 @@ import Map from "@/components/modules/TourDetails/Map";
 import TourBooking from "@/components/modules/TourDetails/TourBooking";
 import TourReviews from "../review/TourReviews";
 import StarRating from "../review/StarRating";
+import { getCookie } from "@/utils/tokenHandlers";
 
-const fetcher = (url: string) => fetch(url).then(r => r.json());
-
+const fetcher = async (url: string) => {
+    const token = await getCookie("accessToken");
+    return fetch(url, { headers: { "authorization": `${token}` }, next: { tags: ["tour"] } }).then((res) => res.json());
+}
 const TourDetailsClient = ({ initialData, slug }: { initialData: any, slug: string }) => {
     const [openGallery, setOpenGallery] = useState(false);
     const [openVideo, setOpenVideo] = useState(false);

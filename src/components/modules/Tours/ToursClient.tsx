@@ -7,9 +7,12 @@ import TourCard from "@/components/modules/Tours/TourCard";
 import TourCardSkeleton from "@/components/skeleton/TourCardSkeleton";
 import { ITour } from "@/types/tour.type";
 import TourCardVertical from "./TourCardVertical";
+import { getCookie } from "@/utils/tokenHandlers";
 
-const fetcher = (url: string) => fetch(url).then(r => r.json());
-
+const fetcher = async (url: string) => {
+  const token = await getCookie("accessToken");
+  return fetch(url, { headers: { "authorization": `${token}`, } }).then((res) => res.json());
+}
 export default function ToursClient({ initialData }: { initialData: any }) {
   const searchParams = useSearchParams();
   const queryString = searchParams.toString();

@@ -2,15 +2,17 @@
 import UserRow from "@/components/modules/dashboard/UserRow";
 import { Table, TableBody, TableCaption, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { IUser } from "@/types/user.type";
+import { getCookie } from "@/utils/tokenHandlers";
 import useSWR from "swr";
 
-const fetcher = (url: string) => fetch(url, { credentials: "include" }).then(r => r.json());
-
+const fetcher = async (url: string) => {
+    const token = await getCookie("accessToken");
+    return fetch(url, { headers: { "authorization": `${token}`, } }).then((res) => res.json());
+}
 const AllUserPage = () => {
     const url = `https://beckend-tour-management.vercel.app/api/v1/user/all-users`;
     const { data, error, isLoading } = useSWR(url, fetcher)
     const users = data?.data as IUser[]
-    console.log(users);
     return (
         <div>
             <Table>

@@ -4,44 +4,15 @@ import { deleteCookie, getCookie } from "./tokenHandlers";
 import { revalidateUser } from "@/app/action";
 import { redirect } from "next/navigation";
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-const checkAuthStatus = async () => {
-    try {
-        const res = await fetch(`https://beckend-tour-management.vercel.app/api/v1/user/me`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            credentials: "include",
-        });
-        const data = await res.json();
 
-        if (!res.ok) {
-            throw new Error("Failed to fetch authentication status.");
-        }
-
-        return {
-            isAuthenticated: true,
-            user: data.data,
-        }
-
-    } catch (err: any) {
-        console.log(err)
-        return {
-            isAuthenticated: false,
-            user: null,
-        }
-    }
-
-}
 export async function forgetPassword({ email }: { email: string }) {
-    console.log(email);
+    const token = await getCookie("accessToken");
     try {
         const res = await fetch(`https://beckend-tour-management.vercel.app/api/v1/auth/forget-password`, {
             method: "POST",
-            credentials: "include",
             headers: {
                 "Content-Type": "application/json",
+                "authorization": `${token}`,
             },
             body: JSON.stringify({ email }),
         });
@@ -60,14 +31,15 @@ export async function forgetPassword({ email }: { email: string }) {
         throw error;
     }
 }
-export async function resetPassword({ newPassword, id, token }: { newPassword: string, id: string, token: string }) {
+export async function resetPassword({ newPassword, id }: { newPassword: string, id: string, }) {
+    const token = await getCookie("accessToken");
     try {
         const res = await fetch(`https://beckend-tour-management.vercel.app/api/v1/auth/reset-password`, {
             method: "POST",
-            credentials: "include",
+
             headers: {
                 "Content-Type": "application/json",
-                "authorization": token
+                "authorization": `${token}`,
             },
             body: JSON.stringify({ newPassword, id }),
         });
@@ -88,12 +60,13 @@ export async function resetPassword({ newPassword, id, token }: { newPassword: s
 }
 
 export async function sendOtp({ email }: { email: string }) {
+    const token = await getCookie("accessToken");
     try {
         const res = await fetch(`https://beckend-tour-management.vercel.app/api/v1/otp/send`, {
             method: "POST",
-            credentials: "include",
             headers: {
                 "Content-Type": "application/json",
+                "authorization": `${token}`,
             },
             body: JSON.stringify({ email }),
         });
@@ -113,12 +86,13 @@ export async function sendOtp({ email }: { email: string }) {
     }
 }
 export async function verifyOtp({ email, otp }: { email: string, otp: string }) {
+    const token = await getCookie("accessToken");
     try {
         const res = await fetch(`https://beckend-tour-management.vercel.app/api/v1/otp/verify`, {
             method: "POST",
-            credentials: "include",
             headers: {
                 "Content-Type": "application/json",
+                "authorization": `${token}`,
             },
             body: JSON.stringify({ email, otp }),
         });
@@ -165,11 +139,14 @@ export async function getMe() {
     }
 }
 export async function updateProfile(formData: FormData, userId: string) {
+    const token = await getCookie("accessToken");
 
     try {
         const res = await fetch(`https://beckend-tour-management.vercel.app/api/v1/user/${userId}`, {
             method: "PATCH",
-            credentials: "include",
+            headers: {
+                "authorization": `${token}`,
+            },
             body: formData,
 
         });
@@ -190,13 +167,14 @@ export async function updateProfile(formData: FormData, userId: string) {
 }
 
 export async function changePassword({ oldPassword, newPassword }: { oldPassword: string, newPassword: string }) {
-
+    const token = await getCookie("accessToken");
     try {
         const res = await fetch(`https://beckend-tour-management.vercel.app/api/v1/auth/change-password`, {
             method: "POST",
             credentials: "include",
             headers: {
                 "Content-Type": "application/json",
+                "authorization": `${token}`,
             },
             body: JSON.stringify({ oldPassword, newPassword }),
 
@@ -220,4 +198,3 @@ export async function changePassword({ oldPassword, newPassword }: { oldPassword
 
 
 
-export default checkAuthStatus;

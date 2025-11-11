@@ -1,9 +1,12 @@
 "use client";
 
+import { getCookie } from "@/utils/tokenHandlers";
 import useSWR from "swr";
 
-const fetcher = (url: string) =>
-  fetch(url, { credentials: "include" }).then((res) => res.json());
+const fetcher = async (url: string) => {
+  const token = await getCookie("accessToken");
+  return fetch(url, { headers: { "authorization": `${token}`, } }).then((res) => res.json());
+}
 
 export const useUser = () => {
   const { data, error, isLoading, mutate } = useSWR(

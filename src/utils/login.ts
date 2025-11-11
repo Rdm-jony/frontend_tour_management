@@ -3,8 +3,7 @@
 import { IResponse } from "@/types/successResponse.type";
 import { IUser } from "@/types/user.type";
 import { parse } from "cookie";
-import { cookies } from "next/headers";
-import { setCookie } from "./tokenHandlers";
+import { getCookie, setCookie } from "./tokenHandlers";
 
 
 // utils/userLogin.ts
@@ -15,15 +14,16 @@ export async function userLogin({
   email: string;
   password: string;
 }) {
+  const token = await getCookie("accessToken");
   try {
     let accessTokenObject: null | any = null;
     let refreshTokenObject: null | any = null;
 
     const res = await fetch("https://beckend-tour-management.vercel.app/api/v1/auth/login", {
       method: "POST",
-      credentials: "include",
       headers: {
         "Content-Type": "application/json",
+        "authorization": `${token}`,
       },
       body: JSON.stringify({ email, password }),
     });
@@ -49,7 +49,6 @@ export async function userLogin({
       })
     }
 
-    const cookieStore = await cookies();
     await setCookie("accessToken", accessTokenObject.accessToken, {
       secure: true,
       httpOnly: true,

@@ -3,10 +3,13 @@ import AddTour from "@/components/modules/dashboard/AddTour";
 import TourCardAdmin from "@/components/modules/Tours/TourCardAdmin";
 import TourCardSkeleton from "@/components/skeleton/TourCardSkeleton";
 import { ITour } from "@/types/tour.type";
+import { getCookie } from "@/utils/tokenHandlers";
 import useSWR from "swr";
 
-const fetcher = (url: string) => fetch(url).then(r => r.json());
-
+const fetcher = async (url: string) => {
+    const token = await getCookie("accessToken");
+    return fetch(url, { headers: { "authorization": `${token}` }, next: { tags: ["tour"] } }).then((res) => res.json());
+}
 const AllTourPage = () => {
     const url = `https://beckend-tour-management.vercel.app/api/v1/tour`;
     const { data, error, isLoading } = useSWR(url, fetcher)

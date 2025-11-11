@@ -15,71 +15,71 @@ import { Button } from "@/components/ui/button";
 import ButtonLoader from "@/components/shared/ButtonLoader";
 
 const FormSchema = z.object({
-  newPassword: z
-    .string()
-    .min(8, { message: "Password must be at least 8 characters long." })
-    .regex(/^(?=.*[A-Z])/, { message: "Password must contain at least 1 uppercase letter." })
-    .regex(/^(?=.*[!@#$%^&*])/, { message: "Password must contain at least 1 special character." })
-    .regex(/^(?=.*\d)/, { message: "Password must contain at least 1 number." }),
+    newPassword: z
+        .string()
+        .min(8, { message: "Password must be at least 8 characters long." })
+        .regex(/^(?=.*[A-Z])/, { message: "Password must contain at least 1 uppercase letter." })
+        .regex(/^(?=.*[!@#$%^&*])/, { message: "Password must contain at least 1 special character." })
+        .regex(/^(?=.*\d)/, { message: "Password must contain at least 1 number." }),
 });
 
 export default function ResetPassClient() {
-  const param = useSearchParams();
-  const id = param?.get("id") ?? "";
-  const token = param?.get("token") ?? "";
-  const router = useRouter();
-  const [isLoading, setLoading] = useState(false);
+    const param = useSearchParams();
+    const id = param?.get("id") ?? "";
+    const token = param?.get("token") ?? "";
+    const router = useRouter();
+    const [isLoading, setLoading] = useState(false);
 
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
-    defaultValues: { newPassword: "" },
-  });
+    const form = useForm<z.infer<typeof FormSchema>>({
+        resolver: zodResolver(FormSchema),
+        defaultValues: { newPassword: "" },
+    });
 
-  const onSubmit = async (data: z.infer<typeof FormSchema>) => {
-    if (!id || !token) return showToast.error("id & token not found");
+    const onSubmit = async (data: z.infer<typeof FormSchema>) => {
+        if (!id || !token) return showToast.error("id & token not found");
 
-    try {
-      setLoading(true);
-      const res = await resetPassword({ id, token, newPassword: data.newPassword });
-      if (res.success) {
-        showToast.success(res.message);
-        router.push("/signIn");
-      }
-    } catch (error: any) {
-      showToast.error(error?.message);
-    } finally {
-      setLoading(false);
-    }
-  };
+        try {
+            setLoading(true);
+            const res = await resetPassword({ id, newPassword: data.newPassword });
+            if (res.success) {
+                showToast.success(res.message);
+                router.push("/signIn");
+            }
+        } catch (error: any) {
+            showToast.error(error?.message);
+        } finally {
+            setLoading(false);
+        }
+    };
 
-  return (
-    <div className="grid place-content-center h-screen">
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-xl">Reset your password</CardTitle>
-        </CardHeader>
-        <CardContent className="lg:min-w-[400px]">
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-              <FormField
-                control={form.control}
-                name="newPassword"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>New Password</FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-                    <FormDescription>This link will expire in 10 minutes.</FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              {isLoading ? <ButtonLoader /> : <Button type="submit">Submit</Button>}
-            </form>
-          </Form>
-        </CardContent>
-      </Card>
-    </div>
-  );
+    return (
+        <div className="grid place-content-center h-screen">
+            <Card>
+                <CardHeader>
+                    <CardTitle className="text-xl">Reset your password</CardTitle>
+                </CardHeader>
+                <CardContent className="lg:min-w-[400px]">
+                    <Form {...form}>
+                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                            <FormField
+                                control={form.control}
+                                name="newPassword"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>New Password</FormLabel>
+                                        <FormControl>
+                                            <Input {...field} />
+                                        </FormControl>
+                                        <FormDescription>This link will expire in 10 minutes.</FormDescription>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            {isLoading ? <ButtonLoader /> : <Button type="submit">Submit</Button>}
+                        </form>
+                    </Form>
+                </CardContent>
+            </Card>
+        </div>
+    );
 }

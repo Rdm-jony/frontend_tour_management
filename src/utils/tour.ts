@@ -1,12 +1,16 @@
 import { revalidateTour } from "@/app/action";
 import { IResponse } from "@/types/successResponse.type";
 import { ITour } from "@/types/tour.type";
+import { getCookie } from "./tokenHandlers";
 
 export async function updateTour(values: FormData, id: string) {
+    const token = await getCookie("accessToken");
     try {
         const res = await fetch(`https://beckend-tour-management.vercel.app/api/v1/tour/${id}`, {
             method: "PATCH",
-            credentials: "include",
+            headers: {
+                "authorization": `${token}`,
+            },
             body: values,
         });
 
@@ -24,10 +28,13 @@ export async function updateTour(values: FormData, id: string) {
     }
 }
 export async function addTour(values: FormData) {
+    const token = await getCookie("accessToken");
     try {
         const res = await fetch(`https://beckend-tour-management.vercel.app/api/v1/tour/create`, {
             method: "POST",
-            credentials: "include",
+            headers: {
+                "authorization": `${token}`,
+            },
             body: values,
         });
 
@@ -48,7 +55,7 @@ export async function getAllTour() {
     try {
         const res = await fetch(`https://beckend-tour-management.vercel.app/api/v1/tour`, {
             method: "GET",
-            credentials: "include",
+            next: { tags: ["tour"] }
         });
 
         if (!res.ok) {
@@ -68,7 +75,6 @@ export async function getTour(id: string) {
     try {
         const res = await fetch(`https://beckend-tour-management.vercel.app/api/v1/tour/${id}`, {
             method: "GET",
-            credentials: "include",
         });
 
         if (!res.ok) {

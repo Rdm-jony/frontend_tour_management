@@ -9,9 +9,12 @@ import Image from "next/image";
 import { useState } from "react";
 import { showToast } from "nextjs-toast-notify";
 import { tourBookingReInit } from "@/utils/booking";
+import { getCookie } from "@/utils/tokenHandlers";
 
-const fetcher = (url: string) =>
-  fetch(url, { credentials: "include" }).then((res) => res.json());
+const fetcher = async (url: string) => {
+  const token = await getCookie("accessToken");
+  return fetch(url, { headers: { "authorization": `${token}`, } }).then((res) => res.json());
+}
 
 const MyBookingPage = () => {
   const [loading, setLoading] = useState(false)

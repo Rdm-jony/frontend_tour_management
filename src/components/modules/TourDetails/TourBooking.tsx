@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Minus, Plus } from "lucide-react";
 import { showToast } from "nextjs-toast-notify";
-import checkAuthStatus, { getMe } from "@/utils/auth";
+import { getMe } from "@/utils/auth";
 import { tourBooking } from "@/utils/booking";
 import { ITour } from "@/types/tour.type";
 import { IUser } from "@/types/user.type";

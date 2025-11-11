@@ -3,12 +3,16 @@
 import { revalidateDivisions } from "@/app/action";
 import { IDivision } from "@/types/division.type";
 import { IResponse } from "@/types/successResponse.type";
+import { getCookie } from "./tokenHandlers";
 
 export async function updateDivision(values: FormData, id: string) {
+    const token = await getCookie("accessToken");
     try {
         const res = await fetch(`https://beckend-tour-management.vercel.app/api/v1/division/${id}`, {
             method: "PATCH",
-            credentials: "include",
+            headers: {
+                "authorization": `${token}`,
+            },
             body: values,
         });
 
@@ -26,10 +30,13 @@ export async function updateDivision(values: FormData, id: string) {
     }
 }
 export async function addDivision(values: FormData) {
+    const token = await getCookie("accessToken");
     try {
         const res = await fetch(`https://beckend-tour-management.vercel.app/api/v1/division/create`, {
             method: "POST",
-            credentials: "include",
+            headers: {
+                "authorization": `${token}`,
+            },
             body: values,
         });
 

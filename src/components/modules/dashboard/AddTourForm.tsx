@@ -25,6 +25,7 @@ import useSWR from "swr";
 import { ITour } from "@/types/tour.type";
 import { addTour } from "@/utils/tour";
 import { showToast } from "nextjs-toast-notify";
+import { getCookie } from "@/utils/tokenHandlers";
 
 const formSchema = z.object({
     title: z.string().min(3, "Title is required"),
@@ -55,8 +56,10 @@ const formSchema = z.object({
 
 type FormValues = z.infer<typeof formSchema>;
 
-const fetcher = (url: string) => fetch(url).then((r) => r.json());
-
+const fetcher = async (url: string) => {
+    const token = await getCookie("accessToken");
+    return fetch(url, { headers: { "authorization": `${token}`, } }).then((res) => res.json());
+}
 const AddTourForm = ({ setOpen }: { setOpen: (bool: boolean) => void }) => {
     const [loading, setLoading] = useState(false);
 

@@ -1,13 +1,15 @@
 import { IReview } from "@/types/review.type";
 import { IResponse } from "@/types/successResponse.type";
+import { getCookie } from "./tokenHandlers";
 
 export async function addReview(payload: Partial<IReview>) {
+  const token = await getCookie("accessToken");
   try {
     const res = await fetch("https://beckend-tour-management.vercel.app/api/v1/review/create", {
       method: "POST",
-      credentials: "include",
       headers: {
         "Content-Type": "application/json",
+        "authorization": `${token}`,
       },
       body: JSON.stringify(payload),
     });
@@ -25,12 +27,13 @@ export async function addReview(payload: Partial<IReview>) {
   }
 }
 export async function updateReview(payload: Partial<IReview>) {
+  const token = await getCookie("accessToken");
   try {
     const res = await fetch(`https://beckend-tour-management.vercel.app/api/v1/review/${payload._id}`, {
       method: "PATCH",
-      credentials: "include",
       headers: {
         "Content-Type": "application/json",
+        "authorization": `${token}`,
       },
       body: JSON.stringify(payload),
     });

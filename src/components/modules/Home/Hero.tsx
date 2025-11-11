@@ -17,6 +17,7 @@ import { IDivision } from "@/types/division.type";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ITourType } from "@/types/category.type";
+import { getCookie } from "@/utils/tokenHandlers";
 
 const slides = [
   { src: "/hero/hero1.jpg", alt: "Hero Image 1" },
@@ -24,8 +25,10 @@ const slides = [
   { src: "/hero/hero3.jpg", alt: "Hero Image 3" },
 ];
 
-const fetcher = (url: string) => fetch(url).then((r) => r.json());
-
+const fetcher = async (url: string) => {
+  const token = await getCookie("accessToken");
+  return fetch(url, { headers: { "authorization": `${token}`, } }).then((res) => res.json());
+}
 const Hero = () => {
   const [selectedDivisionId, setSelectedDivisionId] = useState<string | null>(null);
   const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null);

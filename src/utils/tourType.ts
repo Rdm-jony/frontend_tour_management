@@ -2,13 +2,17 @@
 import { revalidateTourTypes } from "@/app/action";
 import { ITourType } from "@/types/category.type";
 import { IResponse } from "@/types/successResponse.type";
+import { getCookie } from "./tokenHandlers";
 
 // utils/userLogin.ts
 export async function updateTourType(values: FormData, id: string) {
+    const token = await getCookie("accessToken");
     try {
         const res = await fetch(`https://beckend-tour-management.vercel.app/api/v1/tour/tour-types/${id}`, {
             method: "PATCH",
-            credentials: "include",
+            headers: {
+                "authorization": `${token}`,
+            },
             body: values,
         });
 
@@ -26,10 +30,13 @@ export async function updateTourType(values: FormData, id: string) {
     }
 }
 export async function addTourType(values: FormData) {
+    const token = await getCookie("accessToken");
     try {
         const res = await fetch(`https://beckend-tour-management.vercel.app/api/v1/tour/create-tour-type`, {
             method: "POST",
-            credentials: "include",
+            headers: {
+                "authorization": `${token}`,
+            },
             body: values,
         });
 

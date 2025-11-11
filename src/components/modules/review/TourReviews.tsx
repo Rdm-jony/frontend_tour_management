@@ -12,9 +12,12 @@ import { addReview, updateReview } from "@/utils/review";
 import { useUser } from "@/hooks/useUser";
 import ButtonLoader from "@/components/shared/ButtonLoader";
 import Link from "next/link";
+import { getCookie } from "@/utils/tokenHandlers";
 
-const fetcher = (url: string) =>
-  fetch(url, { credentials: "include" }).then((r) => r.json());
+const fetcher = async (url: string) => {
+  const token = await getCookie("accessToken");
+  return fetch(url, { headers: { "authorization": `${token}`, } }).then((res) => res.json());
+}
 
 const TourReviews = ({ tourId }: { tourId: string }) => {
   const url = `https://beckend-tour-management.vercel.app/api/v1/review/${tourId}`;
