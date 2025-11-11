@@ -11,13 +11,16 @@ const SwiperDivision = ({ divisions }: { divisions: IDivision[] }) => {
         <Swiper
             modules={[Autoplay]}
             autoplay={{
-                delay:2000,
-                disableOnInteraction:false
+                delay: 2000,
+                disableOnInteraction: false
             }}
             speed={800}
             loop={true}
             spaceBetween={50}
-            slidesPerView={3}
+            breakpoints={{
+                0: { slidesPerView: 1 }, 
+                768: { slidesPerView: 3 },
+            }}
             onSlideChange={() => console.log('slide change')}
             onSwiper={(swiper) => console.log(swiper)}
         >

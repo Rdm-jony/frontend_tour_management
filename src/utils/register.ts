@@ -12,7 +12,7 @@ export async function userRegister({
     name: string
 }) {
     try {
-        const res = await fetch("http://localhost:5000/api/v1/user/register", {
+        const res = await fetch("https://beckend-tour-management.vercel.app/api/v1/user/register", {
             method: "POST",
             credentials: "include",
             headers: {

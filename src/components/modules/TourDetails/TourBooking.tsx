@@ -1,20 +1,99 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+"use client";
+
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Minus, Plus } from "lucide-react";
-import { useState } from "react";
+import { showToast } from "nextjs-toast-notify";
+import checkAuthStatus, { getMe } from "@/utils/auth";
+import { tourBooking } from "@/utils/booking";
+import { ITour } from "@/types/tour.type";
+import { IUser } from "@/types/user.type";
+import ButtonLoader from "@/components/shared/ButtonLoader";
 
-const TourBooking = () => {
-    const [count, setCount] = useState(1)
+const TourBooking = ({ tour }: { tour: ITour }) => {
+    const [count, setCount] = useState(1);
+    const [loading, setLoading] = useState(false);
+    const [user, setUser] = useState<IUser | null>(null);
+    const router = useRouter();
+
+    useEffect(() => {
+        const fetchAuth = async () => {
+            const data = await getMe();
+            setUser(data?.data as IUser);
+        };
+        fetchAuth();
+    }, []);
+
+    const handleBooking = async () => {
+        try {
+            if (!tour._id) {
+                showToast.error("Tour ID not found");
+                return;
+            }
+
+            if (!user) {
+                showToast.error("Please login to book a tour");
+                router.push("/signIn");
+                return;
+            }
+
+            setLoading(true);
+            const response = await tourBooking({ tour: tour._id, guestCount: count, user: user._id });
+            console.log(response);
+            if (response.success) {
+                showToast.success(response.message || "Tour booked successfully!");
+                window.location.href = response.data.paymentURL;
+            } else {
+                showToast.error(response.message || "Booking failed");
+            }
+        } catch (error: any) {
+            showToast.error(error.message || "Something went wrong");
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
-        <div className="border space-y-4 p-10 sticky top-1/2 shadow-lg rounded-lg">
+        <div className="border p-10 space-y-4 rounded-lg shadow-lg sticky top-1/2  bg-white">
             <div className="flex">
-                <Button variant="outline" onClick={() => setCount(prev => prev - 1)} disabled={count <= 1} className="rounded-r-none"><Minus /></Button>
-                <Button variant="outline" className="rounded-r-none rounded-l-none">{count}</Button>
-                <Button variant="outline" onClick={() => setCount(prev => prev + 1)} disabled={count>=6} className="rounded-l-none"><Plus /></Button>
-
+                <Button
+                    variant="outline"
+                    onClick={() => setCount((prev) => Math.max(1, prev - 1))}
+                    disabled={count <= 1}
+                    className="rounded-r-none"
+                >
+                    <Minus />
+                </Button>
+                <Button variant="outline" className="rounded-none cursor-default">
+                    {count}
+                </Button>
+                <Button
+                    variant="outline"
+                    onClick={() => setCount((prev) => Math.min(5, prev + 1))}
+                    disabled={count >= 5}
+                    className="rounded-l-none"
+                >
+                    <Plus />
+                </Button>
             </div>
+
             <p className="font-semibold text-muted-foreground text-sm">Max Guest: 5</p>
-            <p className="font-semibold text-xl">Total: 5 BDT</p>
-            <Button className="w-full">Book Now</Button>
+
+            <p className="font-semibold text-xl">
+                Total: {tour.costForm as number * count} BDT
+            </p>
+            {
+                loading ? <ButtonLoader /> : <Button
+                    className="w-full cursor-pointer"
+                    onClick={handleBooking}
+                    disabled={user?.role == "ADMIN" || user?.role == "SUPERADMIN"}
+                >
+                    Book Now
+                </Button>
+            }
+
         </div>
     );
 };

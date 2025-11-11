@@ -5,7 +5,7 @@ import SwiperDivision from "./SwiperDivision";
 
 
 const Division = async () => {
-    const data = await fetch('http://localhost:5000/api/v1/division')
+    const data = await fetch('https://beckend-tour-management.vercel.app/api/v1/division')
     const divisions = await data.json()
     return (
         <div className="my-20">

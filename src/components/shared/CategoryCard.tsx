@@ -3,8 +3,18 @@ import Image from "next/image";
 import imagePlaceHolder from "@/assets/image-gallery.png"
 import { ArrowUpRight } from "lucide-react";
 import { Button } from "../ui/button";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const CategoryCard = ({ category }: { category: ITourType }) => {
+    const searchParams = useSearchParams();
+    const router=useRouter()
+
+    const handleNavigate = (value: string) => {
+        const params = new URLSearchParams(searchParams)
+        params.set("tourType", value)
+        const queryString = params.toString();
+        router.push(queryString ? `/tours?${queryString}` : "/tours");
+    }
     return (
         <div className="group">
             <div className="relative h-50 w-full">
@@ -19,7 +29,8 @@ const CategoryCard = ({ category }: { category: ITourType }) => {
                 <div className="absolute inset-0 flex justify-center items-center">
                     <Button
                         size="icon"
-                        className="rounded-full w-12 h-12 opacity-0 translate-y-full transition-all duration-500 ease-in-out group-hover:opacity-100 group-hover:translate-y-0"
+                        onClick={() => handleNavigate(category._id as string)}
+                        className="rounded-full w-12 h-12 cursor-pointer opacity-0 translate-y-full transition-all duration-500 ease-in-out group-hover:opacity-100 group-hover:translate-y-0"
                     >
                         <ArrowUpRight size={24} />
                     </Button>

@@ -17,7 +17,9 @@ export interface ITour {
     videoUrl?: string;
     deletedImages?: string[];
     division: IDivision;
-    lat?:number;
-    lng?:number;
-    tourType: ITourType
+    lat?:string;
+    lng?:string;
+    tourType: ITourType,
+    totalReviews?:number,
+    averageRating?:number
 }

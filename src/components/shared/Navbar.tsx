@@ -11,16 +11,31 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import Logo from "./Logo"
+import ProfileMenu from "../ProfileMenu"
+import { getMe } from "@/utils/auth"
+import { IUser } from "@/types/user.type"
 
 // Navigation links array to be used in both desktop and mobile menus
-const navigationLinks = [
-  { href: "#", label: "Home", active: true },
-  { href: "#", label: "Features" },
-  { href: "#", label: "Pricing" },
-  { href: "#", label: "About" },
-]
 
-export default function Navbar() {
+
+export default async function Navbar() {
+  const navigationLinks = [
+    { href: "/", label: "Home", active: true },
+    { href: "/tours", label: "Tours" },
+
+  ]
+
+  const data = await getMe()
+  const user = data?.data as IUser
+
+  if (user && user.role == "USER") {
+    navigationLinks.push({ href: "/my-booking", label: "My Booking" })
+  }
+
+  if (user && (user.role == "ADMIN" || user.role == "SUPERADMIN")) {
+    navigationLinks.push({ href: "/dashboard", label: "Dashboard" })
+  }
+
   return (
     <header className="border-b px-4 md:px-6 sticky top-0 z-30 bg-white">
       <div className="flex h-16 items-center justify-between gap-4">
@@ -104,12 +119,7 @@ export default function Navbar() {
         </div>
         {/* Right side */}
         <div className="flex items-center gap-2">
-          <Button asChild variant="ghost" size="sm" className="text-sm">
-            <a href="#">Sign In</a>
-          </Button>
-          <Button asChild size="sm" className="text-sm">
-            <a href="#">Get Started</a>
-          </Button>
+          <ProfileMenu user={user} />
         </div>
       </div>
     </header>

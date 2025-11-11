@@ -9,7 +9,7 @@ import { useState } from "react";
 
 const DetailImageSwiper = ({ images }: { images: string[] }) => {
     const [openGallery, setOpenGallery] = useState(false)
-    const [showImg,setShowImg]=useState(images[0])
+    const [showImg, setShowImg] = useState(images[0])
 
     return (
         <Swiper
@@ -22,7 +22,10 @@ const DetailImageSwiper = ({ images }: { images: string[] }) => {
             speed={800}
             loop={true}
             spaceBetween={30}
-            slidesPerView={3}
+            breakpoints={{
+                0: { slidesPerView: 1 },
+                768: { slidesPerView: 3 },
+            }}
             onSlideChange={() => console.log('slide change')}
             onSwiper={(swiper) => console.log(swiper)}
             navigation={{
@@ -32,8 +35,8 @@ const DetailImageSwiper = ({ images }: { images: string[] }) => {
         >
             {
                 images?.map((image: string, idx: number) => <SwiperSlide key={idx} >
-                    <div className="h-80 cursor-pointer" onClick={()=>setOpenGallery(true)}>
-                        <Image onClick={()=>setShowImg(image)} className="rounded-lg" fill alt={image} src={image}></Image>
+                    <div className="h-80 cursor-pointer" onClick={() => setOpenGallery(true)}>
+                        <Image onClick={() => setShowImg(image)} className="rounded-lg" fill alt={image} src={image}></Image>
                     </div>
                 </SwiperSlide>)
             }
@@ -47,7 +50,7 @@ const DetailImageSwiper = ({ images }: { images: string[] }) => {
                 </div>
             </div>
 
-            <ImageGallery open={openGallery} setOpen={setOpenGallery} images={[showImg,...images.filter(image=>image!=showImg)]}/>
+            <ImageGallery open={openGallery} setOpen={setOpenGallery} images={[showImg, ...images.filter(image => image != showImg)]} />
         </Swiper>
     );
 };
