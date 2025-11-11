@@ -27,6 +27,12 @@ export async function userLogin({
       body: JSON.stringify({ email, password }),
     });
 
+
+    if (!res.ok) {
+      const errorData = await res.json();
+      throw new Error(errorData.message || "Login failed");
+    }
+    
     const setCookieHeaders = res.headers.getSetCookie();
 
     if (setCookieHeaders && setCookieHeaders.length > 0) {
@@ -40,15 +46,6 @@ export async function userLogin({
           refreshTokenObject = parsedCookie;
         }
       })
-    } else {
-      throw new Error("No Set-Cookie header found");
-    }
-    if (!accessTokenObject) {
-      throw new Error("Tokens not found in cookies");
-    }
-
-    if (!refreshTokenObject) {
-      throw new Error("Tokens not found in cookies");
     }
 
     const cookieStore = await cookies();
@@ -69,13 +66,8 @@ export async function userLogin({
       sameSite: refreshTokenObject['SameSite'] || "none",
     });
 
-    
 
-    
-    if (!res.ok) {
-      const errorData = await res.json();
-      throw new Error(errorData.message || "Login failed");
-    }
+
 
     const data: IResponse<IUser> = await res.json();
     return data;

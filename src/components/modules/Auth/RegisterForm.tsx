@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
-import Image from 'next/image';
-import SignInImage from "@/assets/signin-image.webp"
+
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -9,13 +8,11 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from '@/component
 import { Input } from "@/components/ui/input"
 import { Button } from '@/components/ui/button';
 import { EyeIcon, Mail, User } from 'lucide-react';
-import { userLogin } from '@/utils/login';
 import { showToast } from "nextjs-toast-notify";
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import ButtonLoader from '@/components/shared/ButtonLoader';
 import { userRegister } from '@/utils/register';
-import { object } from 'zod/v3';
 import { IUser } from '@/types/user.type';
 
 const logninFormSchema = z.object({

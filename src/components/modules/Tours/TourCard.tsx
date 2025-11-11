@@ -14,7 +14,7 @@ const TourCard = ({ tour }: { tour: ITour }) => {
     const [openVideo, setOpenVideo] = useState(false)
 
     return (
-        <div className="w-full md:flex hidden border-2 rounded-lg group shadow-lg shadow-green-100">
+        <div className="w-full md:flex  border-2 rounded-lg group shadow-lg shadow-green-100">
             <div className="h-60 relative w-1/3  overflow-hidden rounded-l-lg">
                 <Image
                     src={tour.images && tour.images.length > 0 ? tour.images[0] : imagePlaceHolder}

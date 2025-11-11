@@ -34,8 +34,12 @@ export default function ToursClient({ initialData }: { initialData: any }) {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-5">
           {tours.map((tour: ITour) => (
             <>
-              <TourCard  key={tour._id} tour={tour} />
-              <TourCardVertical key={tour._id} tour={tour} />
+              <div className="hidden md:block">
+                <TourCard key={tour._id} tour={tour} />
+              </div>
+              <div className="md:hidden">
+                <TourCardVertical key={tour._id} tour={tour} />
+              </div>
             </>
           ))}
         </div>

@@ -20,7 +20,6 @@ const SwiperDivision = ({ divisions }: { divisions: IDivision[] }) => {
             breakpoints={{
                 0: { slidesPerView: 1 }, 
                 768: { slidesPerView: 3 },
-                1024: { slidesPerView: 4 }, 
             }}
             onSlideChange={() => console.log('slide change')}
             onSwiper={(swiper) => console.log(swiper)}

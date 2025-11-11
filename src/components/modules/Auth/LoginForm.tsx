@@ -37,15 +37,28 @@ const LoginForm = ({ redirect }: { redirect: string }) => {
         try {
             setLoading(true)
             const data = await userLogin(values)
+            console.log(data);
             if (data.success) {
                 showToast.success(data.message)
+
                 router.push(redirect ? redirect : "/")
             }
         } catch (error: any) {
             showToast.error(error.message)
+
         } finally {
             setLoading(false)
         }
+    }
+
+    const handleGoogle = async () => {
+        if (redirect) {
+            window.location.href = `http://localhost:5000/api/v1/auth/google?redirect=${redirect}`;
+        } else {
+            window.location.href = `http://localhost:5000/api/v1/auth/google`;
+
+        }
+
     }
     return (
         <div>
@@ -130,7 +143,7 @@ const LoginForm = ({ redirect }: { redirect: string }) => {
                         <hr className="w-full border-slate-300" />
                     </div>
 
-                    <button type="button" className="w-full flex items-center justify-center gap-4 py-2.5 px-6 text-[15px] font-medium tracking-wide text-slate-900 border border-slate-300 rounded-md bg-slate-50 hover:bg-slate-100 focus:outline-none cursor-pointer">
+                    <button onClick={handleGoogle} type="button" className="w-full flex items-center justify-center gap-4 py-2.5 px-6 text-[15px] font-medium tracking-wide text-slate-900 border border-slate-300 rounded-md bg-slate-50 hover:bg-slate-100 focus:outline-none cursor-pointer">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20px" className="inline" viewBox="0 0 512 512">
                             <path fill="#fbbd00"
                                 d="M120 256c0-25.367 6.989-49.13 19.131-69.477v-86.308H52.823C18.568 144.703 0 198.922 0 256s18.568 111.297 52.823 155.785h86.308v-86.308C126.989 305.13 120 281.367 120 256z"

@@ -34,7 +34,7 @@ export default function Profile() {
     <DropdownMenu>
 
       {
-        user && user.email ? <DropdownMenuTrigger asChild> <Button variant="ghost" className="h-auto p-0 hover:bg-transparent">
+        user && user.email ? <DropdownMenuTrigger > <Button variant="ghost" className="h-auto p-0 hover:bg-transparent">
           <Avatar>
             <AvatarImage src={user.picture} alt="Profile image" />
             <AvatarFallback className="capitalize">{user.email[0]}</AvatarFallback>

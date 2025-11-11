@@ -89,7 +89,7 @@ export default function VerifyPage() {
             if (res.success) {
                 showToast.success("OTP Verified");
                 setConfirmed(true);
-                router.push("/")
+                router.push("/signIn")
             }
         } catch (error: any) {
             console.log(error);

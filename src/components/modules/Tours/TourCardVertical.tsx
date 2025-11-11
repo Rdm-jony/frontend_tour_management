@@ -15,7 +15,7 @@ const TourCardVertical = ({ tour }: { tour: ITour }) => {
   const [openVideo, setOpenVideo] = useState(false);
 
   return (
-    <div className="w-full border-2 md:hidden rounded-lg shadow-lg shadow-green-100 overflow-hidden bg-white">
+    <div className="w-full border-2  rounded-lg shadow-lg shadow-green-100 overflow-hidden bg-white">
       
       {/* Top Image */}
       <div className="h-60 relative overflow-hidden">
