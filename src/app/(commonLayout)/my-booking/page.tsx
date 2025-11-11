@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import useSWR from "swr";
@@ -5,12 +6,17 @@ import { IBooking, BOOKING_STATUS } from "@/types/booking.type";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import { useState } from "react";
+import { showToast } from "nextjs-toast-notify";
+import { tourBookingReInit } from "@/utils/booking";
 
 const fetcher = (url: string) =>
   fetch(url, { credentials: "include" }).then((res) => res.json());
 
 const MyBookingPage = () => {
-  const url = `http://localhost:5000/api/v1/booking/myBooking`;
+  const [loading, setLoading] = useState(false)
+
+  const url = `https://beckend-tour-management.vercel.app/api/v1/booking/myBooking`;
   const { data, error, isLoading } = useSWR(url, fetcher);
   const bookings = data?.data as IBooking[];
 
@@ -18,8 +24,25 @@ const MyBookingPage = () => {
   if (error) return <div className="text-center mt-10 text-red-500">Failed to load bookings.</div>;
   if (!bookings || bookings.length === 0) return <div className="text-center mt-10">No bookings found.</div>;
 
+  const handleBookingReInit = async (bookingId: string) => {
+    if (!bookingId) {
+      return showToast.error("booking id not found")
+    }
+
+    try {
+      const result = await tourBookingReInit(bookingId)
+      if (result.success) {
+        window.location.href = result.data
+      }
+    } catch (error: any) {
+      showToast.error(error.message)
+    } finally {
+      setLoading(false)
+    }
+  }
+
   return (
-    <div className="p-6 max-w-6xl mx-auto space-y-6">
+    <div className="md:p-6 max-w-6xl mx-auto space-y-6">
       <h1 className="text-3xl font-bold text-gray-800 mb-4">My Bookings</h1>
 
       {bookings.map((booking) => {
@@ -67,8 +90,8 @@ const MyBookingPage = () => {
                       booking.status === BOOKING_STATUS.COMPLETE
                         ? "bg-green-100 text-green-800"
                         : booking.status === BOOKING_STATUS.CANCEL
-                        ? "bg-red-100 text-red-800"
-                        : "bg-yellow-100 text-yellow-800"
+                          ? "bg-red-100 text-red-800"
+                          : "bg-yellow-100 text-yellow-800"
                     )}
                   >
                     {booking.status}
@@ -88,7 +111,7 @@ const MyBookingPage = () => {
                   </a>
                 )}
                 {booking.status === BOOKING_STATUS.PENDING && payment.status !== "PAID" && (
-                  <Button className="text-white">
+                  <Button className="text-white cursor-pointer" onClick={() => handleBookingReInit(booking._id as string)}>
                     Pay Now
                   </Button>
                 )}

@@ -20,5 +20,6 @@ export interface ITour {
     lat?:string;
     lng?:string;
     tourType: ITourType,
-    totalReviews?:number
+    totalReviews?:number,
+    averageRating?:number
 }

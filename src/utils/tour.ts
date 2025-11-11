@@ -4,7 +4,7 @@ import { ITour } from "@/types/tour.type";
 
 export async function updateTour(values: FormData, id: string) {
     try {
-        const res = await fetch(`http://localhost:5000/api/v1/tour/${id}`, {
+        const res = await fetch(`https://beckend-tour-management.vercel.app/api/v1/tour/${id}`, {
             method: "PATCH",
             credentials: "include",
             body: values,
@@ -25,7 +25,7 @@ export async function updateTour(values: FormData, id: string) {
 }
 export async function addTour(values: FormData) {
     try {
-        const res = await fetch(`http://localhost:5000/api/v1/tour/create`, {
+        const res = await fetch(`https://beckend-tour-management.vercel.app/api/v1/tour/create`, {
             method: "POST",
             credentials: "include",
             body: values,
@@ -46,7 +46,7 @@ export async function addTour(values: FormData) {
 }
 export async function getAllTour() {
     try {
-        const res = await fetch(`http://localhost:5000/api/v1/tour`, {
+        const res = await fetch(`https://beckend-tour-management.vercel.app/api/v1/tour`, {
             method: "GET",
             credentials: "include",
         });
@@ -66,7 +66,7 @@ export async function getAllTour() {
 
 export async function getTour(id: string) {
     try {
-        const res = await fetch(`http://localhost:5000/api/v1/tour/${id}`, {
+        const res = await fetch(`https://beckend-tour-management.vercel.app/api/v1/tour/${id}`, {
             method: "GET",
             credentials: "include",
         });

@@ -8,7 +8,7 @@ import Link from "next/link";
 
 
 const TopDestination = async () => {
-    const data = await fetch(`http://localhost:5000/api/v1/tour?averageRating=5`)
+    const data = await fetch(`https://beckend-tour-management.vercel.app/api/v1/tour?averageRating=5`)
     const tours = await data.json()
     return (
         <div className="my-20">

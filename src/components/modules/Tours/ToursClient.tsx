@@ -13,7 +13,7 @@ const fetcher = (url: string) => fetch(url).then(r => r.json());
 export default function ToursClient({ initialData }: { initialData: any }) {
   const searchParams = useSearchParams();
   const queryString = searchParams.toString();
-  const url = `http://localhost:5000/api/v1/tour?${queryString}`;
+  const url = `https://beckend-tour-management.vercel.app/api/v1/tour?${queryString}`;
 
   const { data, isLoading } = useSWR(url, fetcher, {
     fallbackData: initialData,

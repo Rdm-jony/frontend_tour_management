@@ -4,7 +4,7 @@ import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, Tabl
 import { ITourType } from "@/types/category.type";
 
 const AllTourTypePage = async () => {
-    const res = await fetch('http://localhost:5000/api/v1/tour/tour-types', { cache: "no-store", next: { tags: ["tourTypes"] } });
+    const res = await fetch('https://beckend-tour-management.vercel.app/api/v1/tour/tour-types', { cache: "no-store", next: { tags: ["tourTypes"] } });
     const data = await res.json();
     const tourTypes: ITourType[] = data?.data || [];
 

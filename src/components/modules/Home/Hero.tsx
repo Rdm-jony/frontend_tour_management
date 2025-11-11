@@ -33,8 +33,8 @@ const Hero = () => {
   const [selectedDivisionName, setSelectedDivisionName] = useState<string>("Select a place");
   const [selectedCategoryName, setSelectedCategoryName] = useState<string>("Select a place");
 
-  const divisionUrl = `http://localhost:5000/api/v1/division`;
-  const categoryUrl = `http://localhost:5000/api/v1/tour/tour-types`;
+  const divisionUrl = `https://beckend-tour-management.vercel.app/api/v1/division`;
+  const categoryUrl = `https://beckend-tour-management.vercel.app/api/v1/tour/tour-types`;
 
   const { data: divisonData, isLoading: isLoadingDivision } = useSWR(divisionUrl, fetcher);
   const { data: categoryData, isLoading: isLoafdingCategory } = useSWR(categoryUrl, fetcher);

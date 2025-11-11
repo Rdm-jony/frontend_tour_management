@@ -6,7 +6,7 @@ import { IResponse } from "@/types/successResponse.type";
 
 export async function updateDivision(values: FormData, id: string) {
     try {
-        const res = await fetch(`http://localhost:5000/api/v1/division/${id}`, {
+        const res = await fetch(`https://beckend-tour-management.vercel.app/api/v1/division/${id}`, {
             method: "PATCH",
             credentials: "include",
             body: values,
@@ -27,7 +27,7 @@ export async function updateDivision(values: FormData, id: string) {
 }
 export async function addDivision(values: FormData) {
     try {
-        const res = await fetch(`http://localhost:5000/api/v1/division/create`, {
+        const res = await fetch(`https://beckend-tour-management.vercel.app/api/v1/division/create`, {
             method: "POST",
             credentials: "include",
             body: values,

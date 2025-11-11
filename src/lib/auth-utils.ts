@@ -1,4 +1,4 @@
-export type UserRole = "ADMIN" | "USER";
+export type UserRole = "ADMIN" | "USER" | "SUPERADMIN";
 
 // exact : ["/my-profile", "settings"]
 //   patterns: [/^\/dashboard/, /^\/patient/], // Routes starting with /dashboard/* /patient/*
@@ -10,7 +10,7 @@ export type RouteConfig = {
 export const authRoutes = ["/signIn", "/signUp", "/forgot-password", "/reset-password"];
 
 export const commonProtectedRoutes: RouteConfig = {
-    exact: ["/my-profile", "/settings"],
+    exact: ["/profile"],
     patterns: [],
 }
 
@@ -19,6 +19,10 @@ export const userProtectedRoutes: RouteConfig = {
     patterns: [],
 }
 
+export const superAdminProtectedRoutes: RouteConfig = {
+    patterns: [/^\/dashboard/],
+    exact: [],
+};
 
 export const adminProtectedRoutes: RouteConfig = {
     patterns: [/^\/dashboard/], // Routes starting with /admin/*
@@ -38,7 +42,7 @@ export const isRouteMatches = (pathname: string, routes: RouteConfig): boolean =
     return routes.patterns.some((pattern: RegExp) => pattern.test(pathname))
 }
 
-export const getRouteOwner = (pathname: string): "ADMIN" | "COMMON" | "USER"  | null => {
+export const getRouteOwner = (pathname: string): "ADMIN" | "COMMON" | "USER" | "SUPERADMIN" | null => {
     if (isRouteMatches(pathname, adminProtectedRoutes)) {
         return "ADMIN";
     }
@@ -50,13 +54,14 @@ export const getRouteOwner = (pathname: string): "ADMIN" | "COMMON" | "USER"  | 
     if (isRouteMatches(pathname, userProtectedRoutes)) {
         return "USER";
     }
+    if (isRouteMatches(pathname, superAdminProtectedRoutes)) {
+        return "SUPERADMIN";
+    }
     return null;
 }
 
 export const getDefaultDashboardRoute = (role: UserRole): string => {
-    if (role === "ADMIN") {
-        return "/dashboard";
-    }
+
 
     return "/";
 }

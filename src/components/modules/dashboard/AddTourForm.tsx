@@ -87,8 +87,8 @@ const AddTourForm = ({ setOpen }: { setOpen: (bool: boolean) => void }) => {
 
 
 
-    const urlDivision = `http://localhost:5000/api/v1/division`;
-    const urlTourType = `http://localhost:5000/api/v1/tour/tour-types`;
+    const urlDivision = `https://beckend-tour-management.vercel.app/api/v1/division`;
+    const urlTourType = `https://beckend-tour-management.vercel.app/api/v1/tour/tour-types`;
 
     const { data: divisionsResponse } = useSWR(urlDivision, fetcher);
     const { data: tourTypeResponse } = useSWR(urlTourType, fetcher);
@@ -99,8 +99,8 @@ const AddTourForm = ({ setOpen }: { setOpen: (bool: boolean) => void }) => {
     const onSubmit = async (values: FormValues) => {
         console.log(values);
 
-        const {images,...tourInfo} = values
-         const formattedData = {
+        const { images, ...tourInfo } = values
+        const formattedData = {
             ...tourInfo,
             included: values.included.map((item) => item.value),
             excluded: values.excluded.map((item) => item.value),

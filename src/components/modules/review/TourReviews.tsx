@@ -17,7 +17,7 @@ const fetcher = (url: string) =>
   fetch(url, { credentials: "include" }).then((r) => r.json());
 
 const TourReviews = ({ tourId }: { tourId: string }) => {
-  const url = `http://localhost:5000/api/v1/review/${tourId}`;
+  const url = `https://beckend-tour-management.vercel.app/api/v1/review/${tourId}`;
   const { data, error, isLoading } = useSWR(url, fetcher);
   const { user } = useUser();
 

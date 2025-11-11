@@ -98,8 +98,8 @@ const EditTour = ({ tour, setOpen }: { tour: ITour, setOpen: (bool: boolean) => 
         setTourImages((prev) => prev.filter((i) => i !== image));
     };
 
-    const urlDivision = `http://localhost:5000/api/v1/division`;
-    const urlTourType = `http://localhost:5000/api/v1/tour/tour-types`;
+    const urlDivision = `https://beckend-tour-management.vercel.app/api/v1/division`;
+    const urlTourType = `https://beckend-tour-management.vercel.app/api/v1/tour/tour-types`;
 
     const { data: divisionsResponse } = useSWR(urlDivision, fetcher);
     const { data: tourTypeResponse } = useSWR(urlTourType, fetcher);

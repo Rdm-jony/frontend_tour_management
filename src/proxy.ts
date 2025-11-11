@@ -71,6 +71,8 @@ export const config = {
     matcher: [
         "/signIn",
         "/signUp",
+        "/profile",
+        "/my-booking",
         "/dashboard/:path*"
     ],
 }

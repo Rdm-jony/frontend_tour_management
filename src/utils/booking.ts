@@ -3,11 +3,11 @@ import { IBooking } from "@/types/booking.type";
 import { IResponse } from "@/types/successResponse.type";
 
 // utils/userLogin.ts
-export async function tourBooking(booking:Partial<IBooking>) {
+export async function tourBooking(booking: Partial<IBooking>) {
   try {
-    const res = await fetch("http://localhost:5000/api/v1/booking/create", {
+    const res = await fetch("https://beckend-tour-management.vercel.app/api/v1/booking/create", {
       method: "POST",
-      credentials:"include",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
@@ -19,10 +19,30 @@ export async function tourBooking(booking:Partial<IBooking>) {
       throw new Error(errorData.message || "booking failed");
     }
 
-    const data:IResponse<any> = await res.json();
+    const data: IResponse<any> = await res.json();
     return data;
   } catch (error) {
     console.error(error);
-    throw error; 
+    throw error;
+  }
+}
+
+export async function tourBookingReInit(bookingId: string) {
+  try {
+    const res = await fetch(`https://beckend-tour-management.vercel.app/api/v1/payment/init-payment/${bookingId}`, {
+      method: "POST",
+      credentials: "include",
+    });
+
+    if (!res.ok) {
+      const errorData = await res.json();
+      throw new Error(errorData.message || "booking failed");
+    }
+
+    const data: IResponse<any> = await res.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw error;
   }
 }

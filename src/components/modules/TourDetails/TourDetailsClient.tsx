@@ -15,6 +15,7 @@ import IncludeExclude from "@/components/modules/TourDetails/IncludeExclude";
 import Map from "@/components/modules/TourDetails/Map";
 import TourBooking from "@/components/modules/TourDetails/TourBooking";
 import TourReviews from "../review/TourReviews";
+import StarRating from "../review/StarRating";
 
 const fetcher = (url: string) => fetch(url).then(r => r.json());
 
@@ -22,10 +23,10 @@ const TourDetailsClient = ({ initialData, slug }: { initialData: any, slug: stri
     const [openGallery, setOpenGallery] = useState(false);
     const [openVideo, setOpenVideo] = useState(false);
 
-    const url = `http://localhost:5000/api/v1/tour/${slug}`;
+    const url = `https://beckend-tour-management.vercel.app/api/v1/tour/${slug}`;
     const { data } = useSWR(url, fetcher, { fallbackData: initialData });
 
-    const tour = data?.data;
+    const tour = data?.data as ITour;
     return (
         <div>
             <div className="p-10 bg-green-50">
@@ -41,13 +42,9 @@ const TourDetailsClient = ({ initialData, slug }: { initialData: any, slug: stri
                     <p className="flex items-center gap-2"><LocationEdit className="text-green-600" size={15} />{tour?.location ?? "not provide"}, {tour?.division?.name}</p>
                     <p className="flex gap-2 items-center">
                         <span className="flex items-center">
-                            <StarIcon size={15} className="text-orange-500" />
-                            <StarIcon size={15} className="text-orange-500" />
-                            <StarIcon size={15} className="text-orange-500" />
-                            <StarIcon size={15} className="text-orange-500" />
-                            <StarIcon size={15} className="text-orange-500" />
+                            <StarRating value={tour.averageRating || 0} onChange={() => { }} />
                         </span>
-                        <span className="text-sm">( 1 reviews )</span>
+                        <span className="text-sm">( {tour.totalReviews} reviews )</span>
                     </p>
                 </div>
                 <div className="my-10">
@@ -96,7 +93,7 @@ const TourDetailsClient = ({ initialData, slug }: { initialData: any, slug: stri
                         }
 
                     </div>
-                    <TourReviews tourId={tour._id} />
+                    <TourReviews tourId={tour._id as string} />
 
                 </div>
                 <div className="my-5 md:my-0">

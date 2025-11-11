@@ -12,3 +12,7 @@ export async function revalidateTourTypes() {
 export async function revalidateTour() {
     revalidateTag("tour", "");
 }
+
+export async function revalidateUser() {
+    revalidateTag("user", "");
+}

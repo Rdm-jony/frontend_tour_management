@@ -7,12 +7,12 @@ const fetcher = (url: string) =>
 
 export const useUser = () => {
   const { data, error, isLoading, mutate } = useSWR(
-    "http://localhost:5000/api/v1/user/me",
+    "https://beckend-tour-management.vercel.app/api/v1/user/me",
     fetcher
   );
 
   return {
-    user: data?.data || null,  
+    user: data?.data || null,
     isLoading,
     isError: error,
     mutateUser: mutate,

@@ -1,4 +1,3 @@
-"use client"
 import {
   BoltIcon,
   BookOpenIcon,
@@ -24,18 +23,20 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { useUser } from "@/hooks/useUser"
 import Link from "next/link"
+import LogoutButton from "./shared/LogoutButton"
+import { getMe } from "@/utils/auth"
+import { IUser } from "@/types/user.type"
 
-export default function Profile() {
-  const { user } = useUser()
+export default async function ProfileMenu({user}:{user:IUser}) {
+ 
 
   return (
-    <DropdownMenu>
+    <DropdownMenu >
 
       {
         user && user.email ? <DropdownMenuTrigger > <Button variant="ghost" className="h-auto p-0 hover:bg-transparent">
-          <Avatar>
+          <Avatar className="cursor-pointer">
             <AvatarImage src={user.picture} alt="Profile image" />
             <AvatarFallback className="capitalize">{user.email[0]}</AvatarFallback>
           </Avatar>
@@ -61,10 +62,12 @@ export default function Profile() {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>
-            <BoltIcon size={16} className="opacity-60" aria-hidden="true" />
-            <span>Profile</span>
-          </DropdownMenuItem>
+          <Link href="/profile">
+            <DropdownMenuItem className="cursor-pointer">
+              <BoltIcon size={16} className="opacity-60" aria-hidden="true" />
+              <span>Profile</span>
+            </DropdownMenuItem>
+          </Link>
 
 
         </DropdownMenuGroup>
@@ -73,7 +76,7 @@ export default function Profile() {
         <DropdownMenuSeparator />
         <DropdownMenuItem>
           <LogOutIcon size={16} className="opacity-60" aria-hidden="true" />
-          <span>Logout</span>
+          <LogoutButton />
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

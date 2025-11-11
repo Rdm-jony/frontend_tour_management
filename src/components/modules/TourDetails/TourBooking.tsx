@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Minus, Plus } from "lucide-react";
 import { showToast } from "nextjs-toast-notify";
-import checkAuthStatus from "@/utils/auth";
+import checkAuthStatus, { getMe } from "@/utils/auth";
 import { tourBooking } from "@/utils/booking";
 import { ITour } from "@/types/tour.type";
 import { IUser } from "@/types/user.type";
@@ -15,13 +15,13 @@ import ButtonLoader from "@/components/shared/ButtonLoader";
 const TourBooking = ({ tour }: { tour: ITour }) => {
     const [count, setCount] = useState(1);
     const [loading, setLoading] = useState(false);
-    const [user, setUser] = useState<{ isAuthenticated: boolean; user: IUser } | null>(null);
+    const [user, setUser] = useState<IUser | null>(null);
     const router = useRouter();
 
     useEffect(() => {
         const fetchAuth = async () => {
-            const data = await checkAuthStatus();
-            setUser(data);
+            const data = await getMe();
+            setUser(data?.data as IUser);
         };
         fetchAuth();
     }, []);
@@ -33,14 +33,14 @@ const TourBooking = ({ tour }: { tour: ITour }) => {
                 return;
             }
 
-            if (!user?.isAuthenticated) {
+            if (!user) {
                 showToast.error("Please login to book a tour");
                 router.push("/signIn");
                 return;
             }
 
             setLoading(true);
-            const response = await tourBooking({ tour: tour._id, guestCount: count, user: user?.user._id });
+            const response = await tourBooking({ tour: tour._id, guestCount: count, user: user._id });
             console.log(response);
             if (response.success) {
                 showToast.success(response.message || "Tour booked successfully!");
@@ -88,7 +88,7 @@ const TourBooking = ({ tour }: { tour: ITour }) => {
                 loading ? <ButtonLoader /> : <Button
                     className="w-full cursor-pointer"
                     onClick={handleBooking}
-                    disabled={loading}
+                    disabled={user?.role == "ADMIN" || user?.role == "SUPERADMIN"}
                 >
                     Book Now
                 </Button>

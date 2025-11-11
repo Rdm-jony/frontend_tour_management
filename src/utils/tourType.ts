@@ -6,7 +6,7 @@ import { IResponse } from "@/types/successResponse.type";
 // utils/userLogin.ts
 export async function updateTourType(values: FormData, id: string) {
     try {
-        const res = await fetch(`http://localhost:5000/api/v1/tour/tour-types/${id}`, {
+        const res = await fetch(`https://beckend-tour-management.vercel.app/api/v1/tour/tour-types/${id}`, {
             method: "PATCH",
             credentials: "include",
             body: values,
@@ -27,7 +27,7 @@ export async function updateTourType(values: FormData, id: string) {
 }
 export async function addTourType(values: FormData) {
     try {
-        const res = await fetch(`http://localhost:5000/api/v1/tour/create-tour-type`, {
+        const res = await fetch(`https://beckend-tour-management.vercel.app/api/v1/tour/create-tour-type`, {
             method: "POST",
             credentials: "include",
             body: values,

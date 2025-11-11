@@ -4,7 +4,7 @@ import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, Tabl
 import { IDivision } from "@/types/division.type";
 
 const AllDivisionPage = async () => {
-    const res = await fetch('http://localhost:5000/api/v1/division', { cache: "no-store", next: { tags: ["divisions"] } });
+    const res = await fetch('https://beckend-tour-management.vercel.app/api/v1/division', { cache: "no-store", next: { tags: ["divisions"] } });
     const data = await res.json();
     const divisions: IDivision[] = data?.data || [];
 

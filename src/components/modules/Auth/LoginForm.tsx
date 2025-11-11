@@ -37,7 +37,6 @@ const LoginForm = ({ redirect }: { redirect: string }) => {
         try {
             setLoading(true)
             const data = await userLogin(values)
-            console.log(data);
             if (data.success) {
                 showToast.success(data.message)
 
@@ -45,6 +44,9 @@ const LoginForm = ({ redirect }: { redirect: string }) => {
             }
         } catch (error: any) {
             showToast.error(error.message)
+            if (error.message === "User is not verified") {
+                router.push(`/verify?email=${values.email}`)
+            }
 
         } finally {
             setLoading(false)
@@ -53,9 +55,9 @@ const LoginForm = ({ redirect }: { redirect: string }) => {
 
     const handleGoogle = async () => {
         if (redirect) {
-            window.location.href = `http://localhost:5000/api/v1/auth/google?redirect=${redirect}`;
+            window.location.href = `https://beckend-tour-management.vercel.app/api/v1/auth/google?redirect=${redirect}`;
         } else {
-            window.location.href = `http://localhost:5000/api/v1/auth/google`;
+            window.location.href = `https://beckend-tour-management.vercel.app/api/v1/auth/google`;
 
         }
 
@@ -114,12 +116,7 @@ const LoginForm = ({ redirect }: { redirect: string }) => {
                             </div>
                         </div>
                         <div className="flex flex-wrap items-center justify-between gap-4">
-                            <div className="flex items-center">
-                                <input id="remember-me" name="remember-me" type="checkbox" className="h-4 w-4 shrink-0 text-blue-600 focus:ring-blue-500 border-slate-300 rounded-md" />
-                                <label className="ml-3 block text-[15px] text-slate-900">
-                                    Remember me
-                                </label>
-                            </div>
+
                             <div>
                                 <Link href="/forget-password" className="text-blue-600 font-medium text-sm hover:underline">
                                     Forgot Password?
