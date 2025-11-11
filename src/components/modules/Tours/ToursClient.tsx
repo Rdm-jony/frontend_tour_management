@@ -10,13 +10,12 @@ import TourCardVertical from "./TourCardVertical";
 
 const fetcher = (url: string) => fetch(url).then(r => r.json());
 
-export default function ToursClient({ initialData }: { initialData: any }) {
+export default function ToursClient() {
   const searchParams = useSearchParams();
   const queryString = searchParams.toString();
   const url = `https://beckend-tour-management.vercel.app/api/v1/tour?${queryString}`;
 
   const { data, isLoading } = useSWR(url, fetcher, {
-    fallbackData: initialData,
     revalidateOnFocus: false,
   });
 
