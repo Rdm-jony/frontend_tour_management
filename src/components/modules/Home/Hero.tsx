@@ -11,13 +11,11 @@ import {
 } from "../../ui/dropdown-menu";
 import { Button } from "../../ui/button";
 import { Separator } from "../../ui/separator";
-import useSWR from "swr";
 import { useState } from "react";
 import { IDivision } from "@/types/division.type";
 import Image from "next/image";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { ITourType } from "@/types/category.type";
-import { getCookie } from "@/utils/tokenHandlers";
 
 const slides = [
   { src: "/hero/hero1.jpg", alt: "Hero Image 1" },
@@ -25,32 +23,19 @@ const slides = [
   { src: "/hero/hero3.jpg", alt: "Hero Image 3" },
 ];
 
-const fetcher = async (url: string) => {
-  const token = await getCookie("accessToken");
-  return fetch(url, { headers: { "authorization": `${token}`, } }).then((res) => res.json());
-}
-const Hero = () => {
+
+const Hero = ({ divisions, categories }: { divisions: IDivision[], categories: ITourType[] }) => {
+  console.log(categories)
   const [selectedDivisionId, setSelectedDivisionId] = useState<string | null>(null);
   const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null);
 
   const [selectedDivisionName, setSelectedDivisionName] = useState<string>("Select a place");
   const [selectedCategoryName, setSelectedCategoryName] = useState<string>("Select a place");
 
-  const divisionUrl = `https://beckend-tour-management.vercel.app/api/v1/division`;
-  const categoryUrl = `https://beckend-tour-management.vercel.app/api/v1/tour/tour-types`;
-
-  const { data: divisonData, isLoading: isLoadingDivision } = useSWR(divisionUrl, fetcher);
-  const { data: categoryData, isLoading: isLoafdingCategory } = useSWR(categoryUrl, fetcher);
-
-  const divisions = divisonData?.data as IDivision[];
-  const categories = categoryData?.data as ITourType[];
-
-
-  const searchParams = useSearchParams();
   const router = useRouter()
 
   const handleNavigate = () => {
-    const params = new URLSearchParams(searchParams)
+    const params = new URLSearchParams()
     if (selectedDivisionId) {
       params.set("division", selectedDivisionId)
 
@@ -106,13 +91,11 @@ const Hero = () => {
             <div className="flex gap-5 items-center">
               <MapPin />
               <DropdownMenu>
-                <DropdownMenuTrigger asChild disabled={isLoadingDivision}>
+                <DropdownMenuTrigger asChild disabled={!divisions}>
                   <div className="cursor-pointer">
                     <h3 className="font-semibold text-left">Where To?</h3>
                     <p className="md:text-lg text-muted-foreground">
-                      {isLoadingDivision
-                        ? "Loading divisions..."
-                        : selectedDivisionName || "Search a place or destination"}
+                      {selectedDivisionName || "Search a place or destination"}
                     </p>
                   </div>
                 </DropdownMenuTrigger>
@@ -138,19 +121,18 @@ const Hero = () => {
             <div className="flex gap-5 items-center">
               <Type />
               <DropdownMenu>
-                <DropdownMenuTrigger asChild>
+                <DropdownMenuTrigger asChild disabled={!categories}>
                   <div className="cursor-pointer">
                     <h3 className="font-semibold text-left">What Type?</h3>
                     <p className="md:text-lg text-muted-foreground">
-                      {isLoadingDivision
-                        ? "Loading tour types..."
-                        : selectedCategoryName || "Search a place or tour type"}
+                      {selectedCategoryName || "Search a place or tour type"}
                     </p>
                   </div>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
                   {categories?.map((category) => (
                     <DropdownMenuItem
+
                       key={category._id}
                       onClick={() => {
                         setSelectedCategoryId(category._id as string);
