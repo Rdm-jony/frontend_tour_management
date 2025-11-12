@@ -14,6 +14,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import ButtonLoader from '@/components/shared/ButtonLoader';
 import Link from 'next/link';
+import { DemoUser } from './DemoUser';
 
 const logninFormSchema = z.object({
     email: z.email({
@@ -25,6 +26,7 @@ const logninFormSchema = z.object({
 
 const LoginForm = ({ redirect }: { redirect: string }) => {
     const [loading, setLoading] = useState(false)
+
     const router = useRouter()
     const form = useForm<z.infer<typeof logninFormSchema>>({
         resolver: zodResolver(logninFormSchema),
@@ -64,6 +66,7 @@ const LoginForm = ({ redirect }: { redirect: string }) => {
     }
     return (
         <div>
+
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)}>
 
@@ -164,6 +167,36 @@ const LoginForm = ({ redirect }: { redirect: string }) => {
                         Continue with google
                     </button>
                 </form>
+                <div className="my-4 flex items-center gap-4">
+                    <hr className="w-full border-slate-300" />
+                    <p className="text-sm text-slate-900 text-center">or</p>
+                    <hr className="w-full border-slate-300" />
+                </div>
+                <div className="mt-6">
+                    <DemoUser
+                        onSelectDemo={(type) => {
+                            if (type === "user") {
+                                form.setValue(
+                                    "email",
+                                    process.env.NEXT_PUBLIC_USER_EMAIL || ""
+                                );
+                                form.setValue(
+                                    "password",
+                                    process.env.NEXT_PUBLIC_USER_PASS || ""
+                                );
+                            } else if (type === "admin") {
+                                form.setValue(
+                                    "email",
+                                    process.env.NEXT_PUBLIC_ADMIN_EMAIL || ""
+                                );
+                                form.setValue(
+                                    "password",
+                                    process.env.NEXT_PUBLIC_ADMIN_PASS || ""
+                                );
+                            }
+                        }}
+                    />
+                </div>
             </Form>
         </div>
     );
